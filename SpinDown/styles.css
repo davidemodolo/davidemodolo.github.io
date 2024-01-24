@@ -38,21 +38,21 @@ body {
     margin-bottom: 10px;
   }
   
-  #calculate {
+  .calculate {
     background-color: #4caf50;
     color: #fff;
     padding: 10px;
     cursor: pointer;
     border: 0;
   }
-  #clear {
+  .clear {
     background-color: #af4c4c;
     color: #fff;
     padding: 10px;
     cursor: pointer;
     border: 0;
   }
-  
+
   #suggestions {
     margin-bottom: 10px;
   }
@@ -100,4 +100,8 @@ body {
 
 .item img {
   margin-right: 10px; /* Adjust the margin as needed */
+}
+
+h2 {
+  text-align: center;
 }

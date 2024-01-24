@@ -12,15 +12,27 @@
   <div class="container">
     <h1>SpinDownDice Calculator</h1>
     <img src="imgs/708_Spindown_Dice.png" alt="Spindown Dice" class="dice-image" >
-    <input type="text" id="itemInput" placeholder="Enter item name">
-    <div id="suggestions"></div>
-    <button id="calculate" onclick="calculateItem()">Calculate</button>
-    <button id="clear" onclick="clearPage()">Clear</button>
-    <div id="selected"></div>
-    <div id="result"></div>
     
   </div>
-  
+  <div class="container">
+    <h2>Spins to reach</h2>
+    <input type="text" id="fromInput" placeholder="From">
+    <input type="text" id="toInput" placeholder="To">
+    <div id="suggestionsFromTo"></div>
+    <button class="calculate" onclick="calculateItem()">Show</button>
+    <button class="clear" onclick="clearPage()">Clear</button>
+    <div id="selectedFromTo"></div>
+    <div id="resultFromTo"></div>
+  </div>
+  <div class="container">
+    <h2>Select an Item</h2>
+    <input type="text" id="itemInput" placeholder="Enter item name">
+    <div id="suggestions"></div>
+    <button class="calculate" onclick="calculateItem()">Show</button>
+    <button class="clear" onclick="clearPage()">Clear</button>
+    <div id="selected"></div>
+    <div id="result"></div>
+  </div>
   <div class ="contributions">
     
     <p>Images have been taken from the <a href="https://bindingofisaacrebirth.fandom.com/wiki/Items">Wiki</a></p>
