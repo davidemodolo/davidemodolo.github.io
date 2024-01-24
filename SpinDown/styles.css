@@ -53,6 +53,13 @@ body {
     cursor: pointer;
     border: 0;
   }
+  .switchLabels {
+    background-color: #914caf;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border: 0;
+  }
 
   #suggestions {
     margin-bottom: 10px;

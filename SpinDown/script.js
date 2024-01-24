@@ -834,8 +834,15 @@ function displaySuggestions(input) {
   });
 }
 
+function switchLabels(){
+  const from = document.getElementById("fromInput").value;
+  const to = document.getElementById("toInput").value;
+  document.getElementById("fromInput").value = to;
+  document.getElementById("toInput").value = from;
+}
+
 function displaySuggestionsFrom(input) {
-  const suggestionsDiv = document.getElementById("suggestionsFromTo");
+  const suggestionsDiv = document.getElementById("suggestionsFrom");
   suggestionsDiv.innerHTML = "";
 
   const filteredItems = filterItems(input);
@@ -853,7 +860,7 @@ function displaySuggestionsFrom(input) {
 }
 
 function displaySuggestionsTo(input) {
-  const suggestionsDiv = document.getElementById("suggestionsFromTo");
+  const suggestionsDiv = document.getElementById("suggestionsTo");
   suggestionsDiv.innerHTML = "";
 
   const filteredItems = filterItems(input);

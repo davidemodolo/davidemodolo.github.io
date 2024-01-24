@@ -15,17 +15,19 @@
     
   </div>
   <div class="container">
-    <h2>Spins to reach</h2>
+    <h2>Spins to reach an item:</h2>
     <input type="text" id="fromInput" placeholder="From">
+    <div id="suggestionsFrom"></div>
     <input type="text" id="toInput" placeholder="To">
-    <div id="suggestionsFromTo"></div>
+    <div id="suggestionsTo"></div>
     <button class="calculate" onclick="calculateItemFromTo()">Show</button>
     <button class="clear" onclick="clearPageFromTo()">Clear</button>
+    <button class="switchLabels" onclick="switchLabels()">Switch</button>
     <div id="resultFromTo"></div>
   </div>
 
   <div class="container">
-    <h2>Select an Item</h2>
+    <h2>Previous and following 10 items:</h2>
     <input type="text" id="itemInput" placeholder="Enter item name">
     <div id="suggestions"></div>
     <button class="calculate" onclick="calculateItem()">Show</button>
