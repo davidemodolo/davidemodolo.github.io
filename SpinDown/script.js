@@ -930,7 +930,7 @@ function calculateItem() {
     nextItemsDiv.id = "rightDiv";
     nextItemsDiv.innerHTML =
       
-      "<p><strong>(up to) 10 Items that get you to the selected one:</strong></p>";
+      "<p><strong>(up to) 10 Items that would get you to the selected one:</strong></p>";
 
     const spinningUp = [];
     endI = 717-selectedItem.id > 10 ? 10 : 717-selectedItem.id;
