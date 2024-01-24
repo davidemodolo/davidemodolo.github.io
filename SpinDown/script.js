@@ -758,6 +758,13 @@ function filterItems(input) {
   );
 }
 
+function clearPage(){
+  document.getElementById("itemInput").value = "";
+  document.getElementById("result").innerHTML = "";
+  document.getElementById("selected").innerHTML = "";
+}
+
+
 // Function to display suggestions
 function displaySuggestions(input) {
   const suggestionsDiv = document.getElementById("suggestions");
@@ -770,94 +777,91 @@ function displaySuggestions(input) {
     suggestion.classList.add("suggestion");
     suggestion.addEventListener("click", () => {
       document.getElementById("itemInput").value = item.suggestion;
+      calculateItem();
       suggestionsDiv.innerHTML = "";
     });
     suggestionsDiv.appendChild(suggestion);
   });
 }
 
-// Function to create an element of an item with its name, image and value
 function createItem(item, number){
-  // the result should have item name, under the name the number and on the right the image
   const result = document.createElement("div");
   result.classList.add("item");
-  result.innerHTML = `<p>${item.suggestion} (Spins: ${number})</p>`;
+
   const img = document.createElement("img");
   img.src = `imgs/${item.id}_${item.name}.png`;
   result.appendChild(img);
+
+  const text = document.createElement("p");
+  text.textContent = `${item.suggestion} (Spins: ${number})`;
+  result.appendChild(text);
+
   return result;
 }
+
+
 
 // Function to calculate and display the result
 function calculateItem() {
   const input = document.getElementById("itemInput").value;
   const resultDiv = document.getElementById("result");
-
+  const selectedDiv = document.getElementById("selected");
   const selectedItem = items.find(
     (item) => item.suggestion.toLowerCase() === input.toLowerCase()
   );
 
   if (selectedItem) {
     const result = document.createElement("div");
-    result.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
+    selectedDiv.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
     // add the image inside from imgs/ID_Item_Name.png
     const img = document.createElement("img");
     img.src = `imgs/${selectedItem.id}_${selectedItem.name}.png`;
-    result.appendChild(img);
+    selectedDiv.appendChild(img);
     const previousItemsDiv = document.createElement("div");
+    previousItemsDiv.id = "leftDiv";
     previousItemsDiv.innerHTML =
-      "<p><strong>(up to) 10 Items that get you to the selected one:</strong></p>";
-
-    const startIndex = Math.max(0, selectedItem.id - 10);
-    const endIndex = selectedItem.id - 1;
+    "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
 
     const spinningDown = [];
-
-    for (let i = startIndex; i <= endIndex; i++) {
-      const previousItem = items.find((item) => item.id === i);
+    var endI = selectedItem.id <= 10 ? selectedItem.id : 10;
+    for (let i = 1; i <= endI; i++) {
+      const previousItem = items.find((item) => item.id === selectedItem.id-i);
       if (previousItem) {
-        // const img = document.createElement("img");
-        // previousItemsDiv.innerHTML += `<p>${previousItem.name} (spins: ${
-        //   i
-        // })</p>`;
-        // img.src = `imgs/${previousItem.id}_${previousItem.name}.png`;
-        // previousItemsDiv.appendChild(img);
         spinningDown.push(createItem(previousItem, i));
         previousItemsDiv.appendChild(createItem(previousItem, i));
       }
     }
 
     const nextItemsDiv = document.createElement("div");
+    nextItemsDiv.id = "rightDiv";
     nextItemsDiv.innerHTML =
-      "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
-    const spinningUp = [];
-    const nextStartIndex = selectedItem.id + 1;
-    const nextEndIndex = Math.min(items.length - 1, selectedItem.id + 10);
+      
+      "<p><strong>(up to) 10 Items that get you to the selected one:</strong></p>";
 
-    for (let i = nextStartIndex; i <= nextEndIndex; i++) {
-      const nextItem = items.find((item) => item.id === i);
+    const spinningUp = [];
+    endI = 717-selectedItem.id > 10 ? 10 : 717-selectedItem.id;
+    for (let i = 1; i <= endI; i++) {
+      const nextItem = items.find((item) => item.id === selectedItem.id+i);
       if (nextItem) {
-        // //nextItemsDiv.innerHTML += `<p>${nextItem.name} (ID: ${nextItem.id})</p>`;
-        // nextItemsDiv.innerHTML += `<p>${nextItem.name} (spins: ${
-        //   i - nextStartIndex +1
-        // })</p>`;
-        // // add the image inside from imgs/ID_Item_Name.png
-        // const img = document.createElement("img");
-        // img.src = `imgs/${nextItem.id}_${nextItem.name}.png`;
-        // nextItemsDiv.appendChild(img);
-        spinningUp.push(createItem(nextItem, i - nextStartIndex + 1));
-        nextItemsDiv.appendChild(createItem(nextItem, i - nextStartIndex + 1));
+        spinningUp.push(createItem(nextItem, i));
+        nextItemsDiv.appendChild(createItem(nextItem, i));
       }
     }
 
     resultDiv.innerHTML = "";
-    resultDiv.appendChild(result);
+    //resultDiv.appendChild(result);
     resultDiv.appendChild(previousItemsDiv);
     resultDiv.appendChild(nextItemsDiv);
+    // append previousItemsDiv and nextItemsDiv to resultDiv but with previousItemsDiv on the left and nextItemsDiv on the right
+
+
 
 
   } else {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
+    // hide the suggestions
+    document.getElementById("suggestions").innerHTML = "";
+    selectedDiv.innerHTML = "";
   }
 }
 

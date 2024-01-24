@@ -38,16 +38,19 @@ body {
     margin-bottom: 10px;
   }
   
-  button {
+  #calculate {
     background-color: #4caf50;
     color: #fff;
     padding: 10px;
     cursor: pointer;
     border: 0;
   }
-  
-  button:hover {
-    background-color: #45a049;
+  #clear {
+    background-color: #af4c4c;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border: 0;
   }
   
   #suggestions {
@@ -70,5 +73,31 @@ body {
   
   #result {
     margin-top: 20px;
+    display: flex;
   }
   
+  #leftDiv {
+    flex: 1;
+    
+}
+
+#rightDiv {
+    flex: 1;
+}
+
+#selected{
+  /*align everything to the center*/
+  display: flex;
+  justify-content: center;
+  /*but keep the any image as it is*/
+  align-items: flex-start;
+}
+
+.item {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+}
+
+.item img {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
