@@ -124,8 +124,8 @@ const items = [
   { id: 114, name: "Dead_Bird", suggestion: "Dead Bird" },
   { id: 115, name: "Brimstone", suggestion: "Brimstone" },
   { id: 116, name: "Blood_Bag", suggestion: "Blood Bag" },
-  { id: 117, name: "Odd_Mushroom__", suggestion: "Odd Mushroom <Thin>" },
-  { id: 118, name: "Odd_Mushroom__L", suggestion: "Odd Mushroom <Large>" },
+  { id: 117, name: "Odd_Mushroom__Thin", suggestion: "Odd Mushroom <Thin>" },
+  { id: 118, name: "Odd_Mushroom__Large", suggestion: "Odd Mushroom <Large>" },
   { id: 119, name: "Whore_of_Babylon", suggestion: "Whore of Babylon" },
   { id: 120, name: "Monster_Manual", suggestion: "Monster Manual" },
   { id: 121, name: "Dead_Sea_Scrolls", suggestion: "Dead Sea Scrolls" },
@@ -776,6 +776,18 @@ function displaySuggestions(input) {
   });
 }
 
+// Function to create an element of an item with its name, image and value
+function createItem(item, number){
+  // the result should have item name, under the name the number and on the right the image
+  const result = document.createElement("div");
+  result.classList.add("item");
+  result.innerHTML = `<p>${item.suggestion} (Spins: ${number})</p>`;
+  const img = document.createElement("img");
+  img.src = `imgs/${item.id}_${item.name}.png`;
+  result.appendChild(img);
+  return result;
+}
+
 // Function to calculate and display the result
 function calculateItem() {
   const input = document.getElementById("itemInput").value;
@@ -787,51 +799,54 @@ function calculateItem() {
 
   if (selectedItem) {
     const result = document.createElement("div");
-    result.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion} (ID: ${selectedItem.id})</p>`;
+    result.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
     // add the image inside from imgs/ID_Item_Name.png
     const img = document.createElement("img");
     img.src = `imgs/${selectedItem.id}_${selectedItem.name}.png`;
     result.appendChild(img);
-    // TODO: add the two columns with the "10 items before" and "after" the selected one
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.innerHTML =
-      "<p><strong>10 Items that get you to the selected one:</strong></p>";
+      "<p><strong>(up to) 10 Items that get you to the selected one:</strong></p>";
 
     const startIndex = Math.max(0, selectedItem.id - 10);
     const endIndex = selectedItem.id - 1;
 
+    const spinningDown = [];
+
     for (let i = startIndex; i <= endIndex; i++) {
       const previousItem = items.find((item) => item.id === i);
       if (previousItem) {
-        //previousItemsDiv.innerHTML += `<p>${previousItem.name} (ID: ${previousItem.id})</p>`;
-        // add the image inside from imgs/ID_Item_Name.png
-        const img = document.createElement("img");
-        previousItemsDiv.innerHTML += `<p>${previousItem.name} (spins: ${
-          previousItem.id - startIndex + 1
-        })</p>`;
-        img.src = `imgs/${previousItem.id}_${previousItem.name}.png`;
-        previousItemsDiv.appendChild(img);
+        // const img = document.createElement("img");
+        // previousItemsDiv.innerHTML += `<p>${previousItem.name} (spins: ${
+        //   i
+        // })</p>`;
+        // img.src = `imgs/${previousItem.id}_${previousItem.name}.png`;
+        // previousItemsDiv.appendChild(img);
+        spinningDown.push(createItem(previousItem, i));
+        previousItemsDiv.appendChild(createItem(previousItem, i));
       }
     }
 
     const nextItemsDiv = document.createElement("div");
     nextItemsDiv.innerHTML =
-      "<p><strong>10 Items generated from spinning down the selected one:</strong></p>";
-
+      "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
+    const spinningUp = [];
     const nextStartIndex = selectedItem.id + 1;
     const nextEndIndex = Math.min(items.length - 1, selectedItem.id + 10);
 
     for (let i = nextStartIndex; i <= nextEndIndex; i++) {
       const nextItem = items.find((item) => item.id === i);
       if (nextItem) {
-        //nextItemsDiv.innerHTML += `<p>${nextItem.name} (ID: ${nextItem.id})</p>`;
-        nextItemsDiv.innerHTML += `<p>${nextItem.name} (spins: ${
-          nextItem.id - nextStartIndex + 1
-        })</p>`;
-        // add the image inside from imgs/ID_Item_Name.png
-        const img = document.createElement("img");
-        img.src = `imgs/${nextItem.id}_${nextItem.name}.png`;
-        nextItemsDiv.appendChild(img);
+        // //nextItemsDiv.innerHTML += `<p>${nextItem.name} (ID: ${nextItem.id})</p>`;
+        // nextItemsDiv.innerHTML += `<p>${nextItem.name} (spins: ${
+        //   i - nextStartIndex +1
+        // })</p>`;
+        // // add the image inside from imgs/ID_Item_Name.png
+        // const img = document.createElement("img");
+        // img.src = `imgs/${nextItem.id}_${nextItem.name}.png`;
+        // nextItemsDiv.appendChild(img);
+        spinningUp.push(createItem(nextItem, i - nextStartIndex + 1));
+        nextItemsDiv.appendChild(createItem(nextItem, i - nextStartIndex + 1));
       }
     }
 
@@ -839,6 +854,8 @@ function calculateItem() {
     resultDiv.appendChild(result);
     resultDiv.appendChild(previousItemsDiv);
     resultDiv.appendChild(nextItemsDiv);
+
+
   } else {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
   }
