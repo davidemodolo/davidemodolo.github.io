@@ -783,7 +783,7 @@ function createItem(item, number){
   result.classList.add("item");
   result.innerHTML = `<p>${item.suggestion} (Spins: ${number})</p>`;
   const img = document.createElement("img");
-  img.src = `imgs/${item.id}_${item.name}.png`;
+  img.src = `SpinDown/imgs/${item.id}_${item.name}.png`;
   result.appendChild(img);
   return result;
 }
@@ -802,7 +802,7 @@ function calculateItem() {
     result.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
     // add the image inside from imgs/ID_Item_Name.png
     const img = document.createElement("img");
-    img.src = `imgs/${selectedItem.id}_${selectedItem.name}.png`;
+    img.src = `SpinDown/imgs/${selectedItem.id}_${selectedItem.name}.png`;
     result.appendChild(img);
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.innerHTML =
