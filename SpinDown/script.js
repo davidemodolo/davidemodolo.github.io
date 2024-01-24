@@ -751,6 +751,56 @@ const items = [
   { id: 717, name: "Mom_s_Ring", suggestion: "Mom's Ring" },
 ];
 
+function clearPageFromTo(){
+  document.getElementById("fromInput").value = "";
+  document.getElementById("toInput").value = "";
+  document.getElementById("resultFromTo").innerHTML = "";
+}
+
+function calculateItemFromTo(){
+  const from = document.getElementById("fromInput").value;
+  const to = document.getElementById("toInput").value;
+
+  const fromID = items.find( (item) => item.suggestion.toLowerCase() === from.toLowerCase() );
+  const toID = items.find( (item) => item.suggestion.toLowerCase() === to.toLowerCase() );
+  const resultDiv = document.getElementById("resultFromTo");
+  resultDiv.innerHTML = "";
+  if (!(fromID && toID)){
+    resultDiv.innerHTML = '<p class="error">Item not found!</p>';
+    return;
+  }
+  if (fromID.id < toID.id){
+    resultDiv.innerHTML = '<p class="error"><b>From</b> item must be lower than <b>To</b> item</p>';
+    return;
+  }
+  const steps = fromID.id - toID.id;
+  const result = document.createElement("div");
+  result.classList.add("item");
+
+  const imgFrom = document.createElement("img");
+  imgFrom.src = `imgs/${fromID.id}_${fromID.name}.png`;
+  result.appendChild(imgFrom);
+
+  const text = document.createElement("p");
+  text.textContent = `${fromID.suggestion}`;
+  result.appendChild(text);
+
+  const text2 = document.createElement("p");
+  text2.textContent = ` → ${steps} spins → `;
+  result.appendChild(text2);
+
+  const imgTo = document.createElement("img");
+  imgTo.src = `imgs/${toID.id}_${toID.name}.png`;
+  result.appendChild(imgTo);
+
+  const text3 = document.createElement("p");
+  text3.textContent = `${toID.suggestion}`;
+  result.appendChild(text3);
+
+  resultDiv.appendChild(result);
+
+}
+
 // Function to filter items based on user input
 function filterItems(input) {
   return items.filter((item) =>
@@ -783,6 +833,43 @@ function displaySuggestions(input) {
     suggestionsDiv.appendChild(suggestion);
   });
 }
+
+function displaySuggestionsFrom(input) {
+  const suggestionsDiv = document.getElementById("suggestionsFromTo");
+  suggestionsDiv.innerHTML = "";
+
+  const filteredItems = filterItems(input);
+  filteredItems.forEach((item) => {
+    const suggestion = document.createElement("div");
+    suggestion.textContent = item.suggestion;
+    suggestion.classList.add("suggestion");
+    suggestion.addEventListener("click", () => {
+      document.getElementById("fromInput").value = item.suggestion;
+      //calculateItem();
+      suggestionsDiv.innerHTML = "";
+    });
+    suggestionsDiv.appendChild(suggestion);
+  });
+}
+
+function displaySuggestionsTo(input) {
+  const suggestionsDiv = document.getElementById("suggestionsFromTo");
+  suggestionsDiv.innerHTML = "";
+
+  const filteredItems = filterItems(input);
+  filteredItems.forEach((item) => {
+    const suggestion = document.createElement("div");
+    suggestion.textContent = item.suggestion;
+    suggestion.classList.add("suggestion");
+    suggestion.addEventListener("click", () => {
+      document.getElementById("toInput").value = item.suggestion;
+      //calculateItem();
+      suggestionsDiv.innerHTML = "";
+    });
+    suggestionsDiv.appendChild(suggestion);
+  });
+}
+
 
 function createItem(item, number){
   const result = document.createElement("div");
@@ -869,4 +956,14 @@ function calculateItem() {
 document.getElementById("itemInput").addEventListener("input", (event) => {
   const inputValue = event.target.value;
   displaySuggestions(inputValue);
+});
+
+document.getElementById("fromInput").addEventListener("input", (event) => {
+  const inputValue = event.target.value;
+  displaySuggestionsFrom(inputValue);
+});
+
+document.getElementById("toInput").addEventListener("input", (event) => {
+  const inputValue = event.target.value;
+  displaySuggestionsTo(inputValue);
 });
