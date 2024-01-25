@@ -751,26 +751,31 @@ const items = [
   { id: 717, name: "Mom_s_Ring", suggestion: "Mom's Ring" },
 ];
 
-function clearPageFromTo(){
+function clearPageFromTo() {
   document.getElementById("fromInput").value = "";
   document.getElementById("toInput").value = "";
   document.getElementById("resultFromTo").innerHTML = "";
 }
 
-function calculateItemFromTo(){
+function calculateItemFromTo() {
   const from = document.getElementById("fromInput").value;
   const to = document.getElementById("toInput").value;
 
-  const fromID = items.find( (item) => item.suggestion.toLowerCase() === from.toLowerCase() );
-  const toID = items.find( (item) => item.suggestion.toLowerCase() === to.toLowerCase() );
+  const fromID = items.find(
+    (item) => item.suggestion.toLowerCase() === from.toLowerCase()
+  );
+  const toID = items.find(
+    (item) => item.suggestion.toLowerCase() === to.toLowerCase()
+  );
   const resultDiv = document.getElementById("resultFromTo");
   resultDiv.innerHTML = "";
-  if (!(fromID && toID)){
+  if (!(fromID && toID)) {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
     return;
   }
-  if (fromID.id < toID.id){
-    resultDiv.innerHTML = '<p class="error"><b>From</b> item must be lower than <b>To</b> item</p>';
+  if (fromID.id < toID.id) {
+    resultDiv.innerHTML =
+      '<p class="error"><b>From</b> item must be lower than <b>To</b> item</p>';
     return;
   }
   const steps = fromID.id - toID.id;
@@ -798,7 +803,6 @@ function calculateItemFromTo(){
   result.appendChild(text3);
 
   resultDiv.appendChild(result);
-
 }
 
 // Function to filter items based on user input
@@ -808,16 +812,15 @@ function filterItems(input) {
   );
 }
 
-function clearPage(){
+function clearPage() {
   document.getElementById("itemInput").value = "";
   document.getElementById("result").innerHTML = "";
   document.getElementById("selected").innerHTML = "";
 }
 
-
 // Function to display suggestions
-function displaySuggestions(input) {
-  const suggestionsDiv = document.getElementById("suggestions");
+function displaySuggestions(input, suggestionsDivId, inputId) {
+  const suggestionsDiv = document.getElementById(suggestionsDivId);
   suggestionsDiv.innerHTML = "";
 
   const filteredItems = filterItems(input);
@@ -826,59 +829,25 @@ function displaySuggestions(input) {
     suggestion.textContent = item.suggestion;
     suggestion.classList.add("suggestion");
     suggestion.addEventListener("click", () => {
-      document.getElementById("itemInput").value = item.suggestion;
-      calculateItem();
+      document.getElementById(inputId).value = item.suggestion;
+      if (inputId == "itemInput") {
+        calculateItem();
+      }
       suggestionsDiv.innerHTML = "";
     });
     suggestionsDiv.appendChild(suggestion);
   });
 }
 
-function switchLabels(){
+function switchLabels() {
   const from = document.getElementById("fromInput").value;
   const to = document.getElementById("toInput").value;
   document.getElementById("fromInput").value = to;
   document.getElementById("toInput").value = from;
+  calculateItemFromTo();
 }
 
-function displaySuggestionsFrom(input) {
-  const suggestionsDiv = document.getElementById("suggestionsFrom");
-  suggestionsDiv.innerHTML = "";
-
-  const filteredItems = filterItems(input);
-  filteredItems.forEach((item) => {
-    const suggestion = document.createElement("div");
-    suggestion.textContent = item.suggestion;
-    suggestion.classList.add("suggestion");
-    suggestion.addEventListener("click", () => {
-      document.getElementById("fromInput").value = item.suggestion;
-      //calculateItem();
-      suggestionsDiv.innerHTML = "";
-    });
-    suggestionsDiv.appendChild(suggestion);
-  });
-}
-
-function displaySuggestionsTo(input) {
-  const suggestionsDiv = document.getElementById("suggestionsTo");
-  suggestionsDiv.innerHTML = "";
-
-  const filteredItems = filterItems(input);
-  filteredItems.forEach((item) => {
-    const suggestion = document.createElement("div");
-    suggestion.textContent = item.suggestion;
-    suggestion.classList.add("suggestion");
-    suggestion.addEventListener("click", () => {
-      document.getElementById("toInput").value = item.suggestion;
-      //calculateItem();
-      suggestionsDiv.innerHTML = "";
-    });
-    suggestionsDiv.appendChild(suggestion);
-  });
-}
-
-
-function createItem(item, number){
+function createItem(item, number) {
   const result = document.createElement("div");
   result.classList.add("clickableItem");
 
@@ -899,8 +868,6 @@ function createItem(item, number){
   return result;
 }
 
-
-
 // Function to calculate and display the result
 function calculateItem() {
   const input = document.getElementById("itemInput").value;
@@ -920,12 +887,14 @@ function calculateItem() {
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.id = "leftDiv";
     previousItemsDiv.innerHTML =
-    "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
+      "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
 
     const spinningDown = [];
     var endI = selectedItem.id <= 10 ? selectedItem.id : 10;
     for (let i = 1; i <= endI; i++) {
-      const previousItem = items.find((item) => item.id === selectedItem.id-i);
+      const previousItem = items.find(
+        (item) => item.id === selectedItem.id - i
+      );
       if (previousItem) {
         spinningDown.push(createItem(previousItem, i));
         previousItemsDiv.appendChild(createItem(previousItem, i));
@@ -935,13 +904,12 @@ function calculateItem() {
     const nextItemsDiv = document.createElement("div");
     nextItemsDiv.id = "rightDiv";
     nextItemsDiv.innerHTML =
-      
       "<p><strong>(up to) 10 Items that would get you to the selected one:</strong></p>";
 
     const spinningUp = [];
-    endI = 717-selectedItem.id > 10 ? 10 : 717-selectedItem.id;
+    endI = 717 - selectedItem.id > 10 ? 10 : 717 - selectedItem.id;
     for (let i = 1; i <= endI; i++) {
-      const nextItem = items.find((item) => item.id === selectedItem.id+i);
+      const nextItem = items.find((item) => item.id === selectedItem.id + i);
       if (nextItem) {
         spinningUp.push(createItem(nextItem, i));
         nextItemsDiv.appendChild(createItem(nextItem, i));
@@ -949,17 +917,10 @@ function calculateItem() {
     }
 
     resultDiv.innerHTML = "";
-    //resultDiv.appendChild(result);
     resultDiv.appendChild(previousItemsDiv);
     resultDiv.appendChild(nextItemsDiv);
-    // append previousItemsDiv and nextItemsDiv to resultDiv but with previousItemsDiv on the left and nextItemsDiv on the right
-
-
-
-
   } else {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
-    // hide the suggestions
     document.getElementById("suggestions").innerHTML = "";
     selectedDiv.innerHTML = "";
   }
@@ -968,15 +929,15 @@ function calculateItem() {
 // Event listener for input changes
 document.getElementById("itemInput").addEventListener("input", (event) => {
   const inputValue = event.target.value;
-  displaySuggestions(inputValue);
+  displaySuggestions(inputValue, "suggestions", "itemInput");
 });
 
 document.getElementById("fromInput").addEventListener("input", (event) => {
   const inputValue = event.target.value;
-  displaySuggestionsFrom(inputValue);
+  displaySuggestions(inputValue, "suggestionsFrom", "fromInput");
 });
 
 document.getElementById("toInput").addEventListener("input", (event) => {
   const inputValue = event.target.value;
-  displaySuggestionsTo(inputValue);
+  displaySuggestions(inputValue, "suggestionsTo", "toInput");
 });
