@@ -1,99 +1,110 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #181818;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #3d3d3d;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  .contributions {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #3d3d3d;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    font-size: 12px;
-  }
-  h1 {
-    text-align: center;
-  }
-  
-  .dice-image {
-    display: block;
-    margin: 10px auto;
-    width: 90px;
-  }
-  
-  input {
-    width: 96%; /* for some reason, it overlaps the padding of the container if 100% */
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .calculate {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    border: 0;
-  }
-  .clear {
-    background-color: #af4c4c;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    border: 0;
-  }
-  .switchLabels {
-    background-color: #914caf;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    border: 0;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #181818;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
 
-  #suggestions {
-    margin-bottom: 10px;
-  }
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #3d3d3d;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+.contributions {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #3d3d3d;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 12px;
+}
+h1 {
+  text-align: center;
+}
 
-  .suggestion:hover {
-    background-color: #d8d8d8;
-    cursor: pointer;
-  }
+.dice-image {
+  display: block;
+  margin: 10px auto;
+  width: 90px;
+}
 
-  .suggestion {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #e5e5e5;
-    color: #000000;
-    margin-bottom: 10px;
-  }
+input {
+  width: 96%; /* for some reason, it overlaps the padding of the container if 100% */
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-  
-  #result {
-    margin-top: 20px;
-    display: flex;
-  }
-  
-  #leftDiv {
-    flex: 1;
-    
+.calculate {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+}
+.clear {
+  background-color: #af4c4c;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+}
+.switchLabels {
+  background-color: #914caf;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+}
+
+.calculate:hover {
+  /*darken the color of the button*/
+  background-color: #347736;
+}
+.clear:hover {
+  /*darken the color of the button*/
+  background-color: #703030;
+}
+.switchLabels:hover {
+  /*darken the color of the button*/
+  background-color: #3d204a;
+}
+
+#suggestions {
+  margin-bottom: 10px;
+}
+
+.suggestion:hover {
+  background-color: #d8d8d8;
+  cursor: pointer;
+}
+
+.suggestion {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #e5e5e5;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+#result {
+  margin-top: 20px;
+  display: flex;
+}
+
+#leftDiv {
+  flex: 1;
 }
 
 #rightDiv {
-    flex: 1;
+  flex: 1;
 }
 
-#selected{
+#selected {
   /*align everything to the center*/
   display: flex;
   justify-content: center;
@@ -106,6 +117,20 @@ body {
   align-items: center; /* Align items vertically in the center */
 }
 
+.clickableItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.clickableItem:hover {
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  border-radius: 8px;
+  transform: translateY(-2px);
+  transition: transform 0.06s ease;
+}
+
 .item img {
   margin-right: 10px; /* Adjust the margin as needed */
 }
@@ -114,7 +139,7 @@ h2 {
   text-align: center;
 }
 
-#open_preferences_center{
+#open_preferences_center {
   color: #fff;
   display: flex;
   justify-content: center;

@@ -880,7 +880,7 @@ function displaySuggestionsTo(input) {
 
 function createItem(item, number){
   const result = document.createElement("div");
-  result.classList.add("item");
+  result.classList.add("clickableItem");
 
   const img = document.createElement("img");
   img.src = `imgs/${item.id}_${item.name}.png`;
@@ -889,6 +889,12 @@ function createItem(item, number){
   const text = document.createElement("p");
   text.textContent = `${item.suggestion} (Spins: ${number})`;
   result.appendChild(text);
+
+  // add that when you click on the item it will be added to the input
+  result.addEventListener("click", () => {
+    document.getElementById("itemInput").value = item.suggestion;
+    calculateItem();
+  });
 
   return result;
 }
