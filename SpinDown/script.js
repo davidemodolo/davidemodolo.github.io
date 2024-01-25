@@ -791,7 +791,7 @@ function calculateItemFromTo() {
   result.appendChild(text);
 
   const text2 = document.createElement("p");
-  text2.textContent = ` → ${steps} spins → `;
+  text2.textContent = `→ ${steps} spins → `;
   result.appendChild(text2);
 
   const imgTo = document.createElement("img");
@@ -847,7 +847,8 @@ function switchLabels() {
   calculateItemFromTo();
 }
 
-function createItem(item, number) {
+function createItem(item, number, up = true) {
+  const arrow = up ? "↑" : "↓";
   const result = document.createElement("div");
   result.classList.add("clickableItem");
 
@@ -856,7 +857,7 @@ function createItem(item, number) {
   result.appendChild(img);
 
   const text = document.createElement("p");
-  text.textContent = `${item.suggestion} (Spins: ${number})`;
+  text.textContent = `${item.suggestion} (Spins: ${number}) ${arrow}`;
   result.appendChild(text);
 
   // add that when you click on the item it will be added to the input
@@ -876,7 +877,7 @@ function calculateItem() {
   const selectedItem = items.find(
     (item) => item.suggestion.toLowerCase() === input.toLowerCase()
   );
-
+    // TODO: I may have used the opposite variables names, check it
   if (selectedItem) {
     const result = document.createElement("div");
     selectedDiv.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
@@ -896,8 +897,8 @@ function calculateItem() {
         (item) => item.id === selectedItem.id - i
       );
       if (previousItem) {
-        spinningDown.push(createItem(previousItem, i));
-        previousItemsDiv.appendChild(createItem(previousItem, i));
+        //spinningDown.push(createItem(previousItem, i));
+        previousItemsDiv.appendChild(createItem(previousItem, i, false));
       }
     }
 
@@ -911,7 +912,7 @@ function calculateItem() {
     for (let i = 1; i <= endI; i++) {
       const nextItem = items.find((item) => item.id === selectedItem.id + i);
       if (nextItem) {
-        spinningUp.push(createItem(nextItem, i));
+        //spinningUp.push(createItem(nextItem, i));
         nextItemsDiv.appendChild(createItem(nextItem, i));
       }
     }
