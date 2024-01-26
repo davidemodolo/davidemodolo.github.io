@@ -689,7 +689,7 @@ const items = [
   { id: 655, name: "Strawman", suggestion: "Strawman" },
   { id: 656, name: "Dad_s_Note", suggestion: "Dad's Note" },
   { id: 657, name: "Sausage", suggestion: "Sausage" },
-  { id: 658, name: "Options%3F", suggestion: "Options?" },
+  { id: 658, name: "Options", suggestion: "Options?" },
   { id: 659, name: "Candy_Heart", suggestion: "Candy Heart" },
   { id: 660, name: "A_Pound_of_Flesh", suggestion: "A Pound of Flesh" },
   { id: 661, name: "Redemption", suggestion: "Redemption" },
