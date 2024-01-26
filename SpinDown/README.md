@@ -1,2 +1,5 @@
-Site hosted on github with a textbox requiring an Isaac Item
-Then it shows the spindown dice list to arrive to it in the last 10 rolls
+TODO:
+
+- [ ] Add a description of an item when hover
+- [ ] Add analytics just to see the traffic
+- [ ] Add search bar in the second functionality results

@@ -124,6 +124,26 @@ button:hover {
   margin: 10px;
 }
 
+.found {
+  border: 2px solid green;
+  border-radius: 8px;
+  animation: flash 2s ease-in-out;
+}
+
+@keyframes flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+.error {
+  /*all the text should have a red underline*/
+  text-decoration: underline red;
+}
+
 .clickableItem:hover {
   box-shadow: 0 0 10px rgb(255, 255, 255);
   border-radius: 8px;
