@@ -9,18 +9,20 @@
   </head>
   <body>
     <div class="center">
-      <h5>From an idea by <a href="https://www.twitch.tv/imnabbo">ImNabbo</a> on Twitch, leave a follow</h5>
+      <h5>
+        From an idea by <a href="https://www.twitch.tv/imnabbo">ImNabbo</a> on
+        Twitch, leave a follow
+      </h5>
     </div>
     <div class="container">
       <h1>Spindown Dice Calculator</h1>
       <h4>A basic webapp for The Binding of Isaac: Rebirth</h4>
       <h4>It let's you know the number of spins from an item to another</h4>
-      <h4>And see which items can <b>generate</b> or <b>be generated from</b> the one you input</h4>
-      <img
-        src="sdd.png"
-        alt="Spindown Dice"
-        class="dice-image"
-      />
+      <h4>
+        And see which items can <b>generate</b> or <b>be generated from</b> the
+        one you input
+      </h4>
+      <img src="sdd.png" alt="Spindown Dice" class="dice-image" />
     </div>
     <div class="container">
       <h2>Spins to reach an item:</h2>
@@ -35,8 +37,16 @@
     </div>
 
     <div class="container">
-      <input id="myRange"class = "slider" type="range" min="0" max="100" step="5" value="10"/>
-      <h2 id = "stringItems">Previous and following 10 items:</h2>
+      <input
+        id="myRange"
+        class="slider"
+        type="range"
+        min="0"
+        max="100"
+        step="5"
+        value="10"
+      />
+      <h2 id="stringItems">Previous and following 10 items:</h2>
       <input type="text" id="itemInput" placeholder="Enter item name" />
       <div id="suggestions"></div>
       <button class="calculate" onclick="calculateItem()">Show</button>
@@ -56,7 +66,7 @@
         <a href="https://www.linkedin.com/in/davide-modolo/">Linkedin</a>
       </p>
     </div>
-
+    <button class="up-button" onclick="scrollToTop()">↑ Scroll Up ↑</button>
     <script src="script.js"></script>
   </body>
 </html>

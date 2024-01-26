@@ -834,7 +834,7 @@ function displaySuggestions(input, suggestionsDivId, inputId) {
       if (inputId == "itemInput") {
         calculateItem();
       }
-      if(inputId == "searchInput"){
+      if (inputId == "searchInput") {
         calculateItem(item.suggestion);
       }
       suggestionsDiv.innerHTML = "";
@@ -884,7 +884,7 @@ function calculateItem(suggestion = undefined) {
   const selectedItem = items.find(
     (item) => item.suggestion.toLowerCase() === input.toLowerCase()
   );
-    // TODO: I may have used the opposite variables names, check it
+  // TODO: I may have used the opposite variables names, check it
   if (selectedItem) {
     selectedDiv.innerHTML = `<p><strong>Selected Item:</strong> ${selectedItem.suggestion}</p>`;
     // add the image inside from imgs/ID_Item_Name.png
@@ -906,13 +906,10 @@ function calculateItem(suggestion = undefined) {
     });
     serchDiv.appendChild(input);
 
-
-
     // START SEARCH OF THE ITEMS
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.id = "leftDiv";
-    previousItemsDiv.innerHTML =
-      `<p><strong>(up to) ${sliderValue} Items generated from spinning down the selected one:</strong></p>`;
+    previousItemsDiv.innerHTML = `<p><strong>(up to) ${sliderValue} Items generated from spinning down the selected one:</strong></p>`;
     const spinningDown = [];
     var endI = selectedItem.id <= sliderValue ? selectedItem.id : sliderValue;
     var found;
@@ -922,7 +919,10 @@ function calculateItem(suggestion = undefined) {
       );
       if (previousItem) {
         const item = createItem(previousItem, i, false);
-        if (suggestion && previousItem.suggestion.toLowerCase() === suggestion.toLowerCase()) {
+        if (
+          suggestion &&
+          previousItem.suggestion.toLowerCase() === suggestion.toLowerCase()
+        ) {
           item.classList.add("found");
           found = item;
         }
@@ -930,20 +930,22 @@ function calculateItem(suggestion = undefined) {
       }
     }
     // scroll to the found
-    
 
     const nextItemsDiv = document.createElement("div");
     nextItemsDiv.id = "rightDiv";
-    nextItemsDiv.innerHTML =
-    `<p><strong>(up to) ${sliderValue} Items that would get you to the selected one:</strong></p>`;
+    nextItemsDiv.innerHTML = `<p><strong>(up to) ${sliderValue} Items that would get you to the selected one:</strong></p>`;
 
     const spinningUp = [];
-    endI = 717 - selectedItem.id > sliderValue ? sliderValue : 717 - selectedItem.id;
+    endI =
+      717 - selectedItem.id > sliderValue ? sliderValue : 717 - selectedItem.id;
     for (let i = 1; i <= endI; i++) {
       const nextItem = items.find((item) => item.id === selectedItem.id + i);
       if (nextItem) {
         const item = createItem(nextItem, i);
-        if (suggestion && nextItem.suggestion.toLowerCase() === suggestion.toLowerCase()) {
+        if (
+          suggestion &&
+          nextItem.suggestion.toLowerCase() === suggestion.toLowerCase()
+        ) {
           item.classList.add("found");
           found = item;
         }
@@ -954,14 +956,13 @@ function calculateItem(suggestion = undefined) {
     resultDiv.innerHTML = "";
     resultDiv.appendChild(previousItemsDiv);
     resultDiv.appendChild(nextItemsDiv);
-    if(suggestion){
-    if (found) {
-      found.scrollIntoView({behavior: "smooth", block: "center"});
+    if (suggestion) {
+      if (found) {
+        found.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        searchText.innerHTML = `<p class="error">Not found in the results</p>`;
+      }
     }
-    else{
-      searchText.innerHTML = `<p class="error">Not found in the results</p>`;
-    }
-  }
   } else {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
     document.getElementById("suggestions").innerHTML = "";
@@ -972,9 +973,9 @@ function calculateItem(suggestion = undefined) {
 var slider = document.getElementById("myRange");
 var output = document.getElementById("stringItems");
 
-slider.oninput = function() {
+slider.oninput = function () {
   output.innerHTML = `Previous and following ${this.value} items:`;
-}
+};
 
 // Event listener for input changes
 document.getElementById("itemInput").addEventListener("input", (event) => {
@@ -992,6 +993,6 @@ document.getElementById("toInput").addEventListener("input", (event) => {
   displaySuggestions(inputValue, "suggestionsTo", "toInput");
 });
 
-function scrollToTop(){
+function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }

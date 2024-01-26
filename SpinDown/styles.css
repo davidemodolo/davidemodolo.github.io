@@ -23,10 +23,10 @@ body {
   border-radius: 8px;
   font-size: 12px;
 }
-.center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 h1 {
   text-align: center;
@@ -127,14 +127,17 @@ button:hover {
 .found {
   border: 2px solid green;
   border-radius: 8px;
-  animation: flash 2s ease-in-out;
+  /*animation: flash 2s ease-in-out;*/
 }
 
 @keyframes flash {
-  0%, 50%, 100% {
+  0%,
+  50%,
+  100% {
     opacity: 1;
   }
-  25%, 75% {
+  25%,
+  75% {
     opacity: 0;
   }
 }
@@ -152,7 +155,7 @@ button:hover {
 }
 
 .item img {
-  margin-right: 10px; /* Adjust the margin as needed */
+  margin-right: 10px;
 }
 
 h2 {
@@ -164,4 +167,16 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.up-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #914caf;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
 }
