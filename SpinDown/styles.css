@@ -23,6 +23,11 @@ body {
   border-radius: 8px;
   font-size: 12px;
 }
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 h1 {
   text-align: center;
 }
@@ -65,17 +70,8 @@ input {
   border: 0;
 }
 
-.calculate:hover {
-  /*darken the color of the button*/
-  background-color: #347736;
-}
-.clear:hover {
-  /*darken the color of the button*/
-  background-color: #703030;
-}
-.switchLabels:hover {
-  /*darken the color of the button*/
-  background-color: #3d204a;
+button:hover {
+  opacity: 0.8;
 }
 
 #suggestions {

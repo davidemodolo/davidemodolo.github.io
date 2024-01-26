@@ -874,6 +874,7 @@ function calculateItem() {
   const input = document.getElementById("itemInput").value;
   const resultDiv = document.getElementById("result");
   const selectedDiv = document.getElementById("selected");
+  const sliderValue = document.getElementById("myRange").value;
   const selectedItem = items.find(
     (item) => item.suggestion.toLowerCase() === input.toLowerCase()
   );
@@ -888,10 +889,10 @@ function calculateItem() {
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.id = "leftDiv";
     previousItemsDiv.innerHTML =
-      "<p><strong>(up to) 10 Items generated from spinning down the selected one:</strong></p>";
+      `<p><strong>(up to) ${sliderValue} Items generated from spinning down the selected one:</strong></p>`;
 
     const spinningDown = [];
-    var endI = selectedItem.id <= 10 ? selectedItem.id : 10;
+    var endI = selectedItem.id <= sliderValue ? selectedItem.id : sliderValue;
     for (let i = 1; i <= endI; i++) {
       const previousItem = items.find(
         (item) => item.id === selectedItem.id - i
@@ -905,10 +906,10 @@ function calculateItem() {
     const nextItemsDiv = document.createElement("div");
     nextItemsDiv.id = "rightDiv";
     nextItemsDiv.innerHTML =
-      "<p><strong>(up to) 10 Items that would get you to the selected one:</strong></p>";
+    `<p><strong>(up to) ${sliderValue} Items that would get you to the selected one:</strong></p>`;
 
     const spinningUp = [];
-    endI = 717 - selectedItem.id > 10 ? 10 : 717 - selectedItem.id;
+    endI = 717 - selectedItem.id > sliderValue ? sliderValue : 717 - selectedItem.id;
     for (let i = 1; i <= endI; i++) {
       const nextItem = items.find((item) => item.id === selectedItem.id + i);
       if (nextItem) {
@@ -925,6 +926,13 @@ function calculateItem() {
     document.getElementById("suggestions").innerHTML = "";
     selectedDiv.innerHTML = "";
   }
+}
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("stringItems");
+
+slider.oninput = function() {
+  output.innerHTML = `Previous and following ${this.value} items:`;
 }
 
 // Event listener for input changes
