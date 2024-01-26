@@ -775,22 +775,38 @@ function calculateItemFromTo() {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
     return;
   }
-  const dn = fromID.id - DADSNOTE_ID;
-  console.log(dn);
-  if((fromID.id >= DADSNOTE_ID) && (toID.id <= DADSNOTE_ID)) {
-    resultDiv.innerHTML =
-      `<p class="error">Dad\'s Note is on the way after ${dn} spins </p>`;
-    console.log(to);
+  var dn = fromID.id - DADSNOTE_ID;
+  if (fromID.id >= DADSNOTE_ID && toID.id <= DADSNOTE_ID && (!carBattery || dn % 2 == 0)) {
+    if(carBattery && dn % 2 == 0){
+      dn = dn / 2;
+    }
+    resultDiv.innerHTML = `<p class="error">Dad\'s Note is on the way after ${dn} spins </p>`;
     toID.name = DADSNOTE;
     toID.id = DADSNOTE_ID;
-    toID.suggestion = "Dad's Note"
+    toID.suggestion = "Dad's Note";
   }
   if (fromID.id < toID.id) {
     resultDiv.innerHTML =
       '<p class="error"><b>From</b> item must be lower than <b>To</b> item</p>';
     return;
   }
-  const steps = fromID.id - toID.id;
+  var steps = fromID.id - toID.id;
+  if (carBattery && steps % 2 == 1) {
+    const cardBatteryNewDiv = document.createElement("div");
+    cardBatteryNewDiv.classList.add("item");
+    const cardBatteryNewText = document.createElement("p");
+    cardBatteryNewText.classList.add("error");
+    cardBatteryNewText.textContent = `Due to Car Battery, the item is not achievable`;
+    cardBatteryNewDiv.appendChild(cardBatteryNewText);
+    const cardBatteryNewImage = document.createElement("img");
+    cardBatteryNewImage.src = `imgs/352_Car_Battery.png`;
+    cardBatteryNewDiv.appendChild(cardBatteryNewImage);
+    resultDiv.appendChild(cardBatteryNewDiv);
+    return;
+  }
+  else if (carBattery && steps % 2 == 0) {
+    steps = steps / 2;
+  }
   const result = document.createElement("div");
   result.classList.add("item");
 
@@ -824,7 +840,7 @@ function filterItems(input) {
   );
 }
 
-const DADSNOTE = "Dad_s_Note"
+const DADSNOTE = "Dad_s_Note";
 const DADSNOTE_ID = 656;
 
 function clearPage() {
@@ -927,12 +943,17 @@ function calculateItem(suggestion = undefined) {
     previousItemsDiv.innerHTML = `<p><strong>(up to) ${sliderValue} Items generated from spinning down the selected one:</strong></p>`;
     var endI = selectedItem.id <= sliderValue ? selectedItem.id : sliderValue;
     var found;
+    endI = carBattery ? endI * 2 : endI;
     for (let i = 1; i <= endI; i++) {
+      if (carBattery && i % 2 == 1) {
+        continue;
+      }
       const previousItem = items.find(
         (item) => item.id === selectedItem.id - i
       );
       if (previousItem) {
-        const item = createItem(previousItem, i, false);
+        const iValue = carBattery ? i / 2 : i;
+        const item = createItem(previousItem, iValue, false);
         if (
           suggestion &&
           previousItem.suggestion.toLowerCase() === suggestion.toLowerCase()
@@ -940,9 +961,9 @@ function calculateItem(suggestion = undefined) {
           item.classList.add("found");
           found = item;
         }
-        previousItemsDiv.appendChild(item);        
+        previousItemsDiv.appendChild(item);
       }
-      if(previousItem && previousItem.name == DADSNOTE){
+      if (previousItem && previousItem.name == DADSNOTE) {
         const error = document.createElement("p");
         error.classList.add("error");
         error.textContent = "Dad's Note is on the way!";
@@ -957,10 +978,15 @@ function calculateItem(suggestion = undefined) {
 
     endI =
       717 - selectedItem.id > sliderValue ? sliderValue : 717 - selectedItem.id;
+      endI = carBattery ? endI * 2 : endI;
     for (let i = 1; i <= endI; i++) {
+      if (carBattery && i % 2 == 1) {
+        continue;
+      }
       const nextItem = items.find((item) => item.id === selectedItem.id + i);
       if (nextItem) {
-        const item = createItem(nextItem, i);
+        const iValue = carBattery ? i / 2 : i;
+        const item = createItem(nextItem, iValue);
         if (
           suggestion &&
           nextItem.suggestion.toLowerCase() === suggestion.toLowerCase()
@@ -970,7 +996,7 @@ function calculateItem(suggestion = undefined) {
         }
         nextItemsDiv.appendChild(item);
       }
-      if(nextItem && nextItem.name == DADSNOTE){
+      if (nextItem && nextItem.name == DADSNOTE) {
         const error = document.createElement("p");
         error.classList.add("error");
         error.textContent = "Dad's Note is on the way!";
@@ -1017,6 +1043,17 @@ document.getElementById("fromInput").addEventListener("input", (event) => {
 document.getElementById("toInput").addEventListener("input", (event) => {
   const inputValue = event.target.value;
   displaySuggestions(inputValue, "suggestionsTo", "toInput");
+});
+
+var carBattery = false;
+const containerBattery = document.getElementById("containerBattery");
+containerBattery.addEventListener("click", () => {
+  carBattery = !carBattery;
+  containerBattery.style.backgroundColor = carBattery ? "#1e3e1e" : "#3e1e1e";
+  const label = document.getElementById("carbattery");
+  label.textContent = carBattery
+    ? "I have Car Battery"
+    : "I don't have Car Battery";
 });
 
 function scrollToTop() {

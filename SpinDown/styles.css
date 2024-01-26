@@ -9,15 +9,31 @@ body {
 .container {
   max-width: 600px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 20px 20px;
   background-color: #3d3d3d;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   border-radius: 8px;
 }
+.containerBattery {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #3e1e1e;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.containerBattery:hover{
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
 .contributions {
   max-width: 600px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #3d3d3d;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -39,7 +55,7 @@ h4 {
 .dice-image {
   display: block;
   margin: 10px auto;
-  width: 90px;
+  width: 50px;
 }
 
 input {
