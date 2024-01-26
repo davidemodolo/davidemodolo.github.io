@@ -759,19 +759,31 @@ function clearPageFromTo() {
 
 function calculateItemFromTo() {
   const from = document.getElementById("fromInput").value;
-  const to = document.getElementById("toInput").value;
+  var to = document.getElementById("toInput").value;
 
   const fromID = items.find(
     (item) => item.suggestion.toLowerCase() === from.toLowerCase()
   );
-  const toID = items.find(
+  var toID = items.find(
     (item) => item.suggestion.toLowerCase() === to.toLowerCase()
   );
+  // change toID to be a copy and not the same object
+  toID = JSON.parse(JSON.stringify(toID));
   const resultDiv = document.getElementById("resultFromTo");
   resultDiv.innerHTML = "";
   if (!(fromID && toID)) {
     resultDiv.innerHTML = '<p class="error">Item not found!</p>';
     return;
+  }
+  const dn = fromID.id - DADSNOTE_ID;
+  console.log(dn);
+  if((fromID.id >= DADSNOTE_ID) && (toID.id <= DADSNOTE_ID)) {
+    resultDiv.innerHTML =
+      `<p class="error">Dad\'s Note is on the way after ${dn} spins </p>`;
+    console.log(to);
+    toID.name = DADSNOTE;
+    toID.id = DADSNOTE_ID;
+    toID.suggestion = "Dad's Note"
   }
   if (fromID.id < toID.id) {
     resultDiv.innerHTML =
@@ -811,6 +823,9 @@ function filterItems(input) {
     item.suggestion.toLowerCase().includes(input.toLowerCase())
   );
 }
+
+const DADSNOTE = "Dad_s_Note"
+const DADSNOTE_ID = 656;
 
 function clearPage() {
   document.getElementById("itemInput").value = "";
@@ -910,7 +925,6 @@ function calculateItem(suggestion = undefined) {
     const previousItemsDiv = document.createElement("div");
     previousItemsDiv.id = "leftDiv";
     previousItemsDiv.innerHTML = `<p><strong>(up to) ${sliderValue} Items generated from spinning down the selected one:</strong></p>`;
-    const spinningDown = [];
     var endI = selectedItem.id <= sliderValue ? selectedItem.id : sliderValue;
     var found;
     for (let i = 1; i <= endI; i++) {
@@ -926,16 +940,21 @@ function calculateItem(suggestion = undefined) {
           item.classList.add("found");
           found = item;
         }
-        previousItemsDiv.appendChild(item);
+        previousItemsDiv.appendChild(item);        
+      }
+      if(previousItem && previousItem.name == DADSNOTE){
+        const error = document.createElement("p");
+        error.classList.add("error");
+        error.textContent = "Dad's Note is on the way!";
+        previousItemsDiv.appendChild(error);
+        break;
       }
     }
-    // scroll to the found
 
     const nextItemsDiv = document.createElement("div");
     nextItemsDiv.id = "rightDiv";
     nextItemsDiv.innerHTML = `<p><strong>(up to) ${sliderValue} Items that would get you to the selected one:</strong></p>`;
 
-    const spinningUp = [];
     endI =
       717 - selectedItem.id > sliderValue ? sliderValue : 717 - selectedItem.id;
     for (let i = 1; i <= endI; i++) {
@@ -950,6 +969,13 @@ function calculateItem(suggestion = undefined) {
           found = item;
         }
         nextItemsDiv.appendChild(item);
+      }
+      if(nextItem && nextItem.name == DADSNOTE){
+        const error = document.createElement("p");
+        error.classList.add("error");
+        error.textContent = "Dad's Note is on the way!";
+        nextItemsDiv.appendChild(error);
+        break;
       }
     }
 
