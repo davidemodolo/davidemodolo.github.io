@@ -1,4 +1,3 @@
-// Sample data for testing
 const items = [
   { id: 1, name: "The_Sad_Onion", suggestion: "The Sad Onion" },
   { id: 2, name: "The_Inner_Eye", suggestion: "The Inner Eye" },
@@ -751,6 +750,11 @@ const items = [
   { id: 717, name: "Mom_s_Ring", suggestion: "Mom's Ring" },
 ];
 
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const settings = { timestampsInSnapshots: true };
+db.settings(settings);
+
 function clearPageFromTo() {
   document.getElementById("fromInput").value = "";
   document.getElementById("toInput").value = "";
@@ -892,6 +896,7 @@ function loadImage(item, result) {
     // If the image URL is in localStorage, create an image element with the cached URL
     const img = document.createElement("img");
     img.src = cachedImage;
+    console.log("found cached image");
     result.appendChild(img);
   } else {
     // If the image URL is not in localStorage, create a new image element
