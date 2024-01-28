@@ -750,11 +750,6 @@ const items = [
   { id: 717, name: "Mom_s_Ring", suggestion: "Mom's Ring" },
 ];
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const settings = { timestampsInSnapshots: true };
-db.settings(settings);
-
 function clearPageFromTo() {
   document.getElementById("fromInput").value = "";
   document.getElementById("toInput").value = "";
