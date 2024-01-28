@@ -882,14 +882,38 @@ function switchLabels() {
   calculateItemFromTo();
 }
 
+function loadImage(item, result) {
+  const imgSrc = `imgs/${item.id}_${item.name}.png`;
+
+  // Check if the image URL is in localStorage
+  const cachedImage = localStorage.getItem(imgSrc);
+
+  if (cachedImage) {
+    // If the image URL is in localStorage, create an image element with the cached URL
+    const img = document.createElement("img");
+    img.src = cachedImage;
+    result.appendChild(img);
+  } else {
+    // If the image URL is not in localStorage, create a new image element
+    const img = document.createElement("img");
+    img.src = imgSrc;
+
+    // Append the image to the result element
+    result.appendChild(img);
+
+    // Store the image URL in localStorage for future use
+    localStorage.setItem(imgSrc, img.src);
+  }
+}
+
 function createItem(item, number, up = true) {
   const arrow = up ? "↑" : "↓";
   const result = document.createElement("div");
   result.classList.add("clickableItem");
-
-  const img = document.createElement("img");
-  img.src = `imgs/${item.id}_${item.name}.png`;
-  result.appendChild(img);
+  loadImage(item, result);
+  // const img = document.createElement("img");
+  // img.src = `imgs/${item.id}_${item.name}.png`;
+  // result.appendChild(img);
 
   const text = document.createElement("p");
   text.textContent = `${item.suggestion} (Spins: ${number}) ${arrow}`;
