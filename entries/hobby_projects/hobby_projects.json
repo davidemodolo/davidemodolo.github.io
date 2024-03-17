@@ -1,0 +1,31 @@
+{
+    "entries": [
+        {
+            "name": "Entry 1",
+            "description": "Description of Entry 1",
+            "tags": [
+                "tag1",
+                "tag2"
+            ],
+            "imagePath": "/path/to/image1.jpg"
+        },
+        {
+            "name": "Entry 2",
+            "description": "Description of Entry 2",
+            "tags": [
+                "tag3",
+                "tag4"
+            ],
+            "imagePath": "/path/to/image2.jpg"
+        },
+        {
+            "name": "Entry 3",
+            "description": "Description of Entry 3",
+            "tags": [
+                "tag5",
+                "tag6"
+            ],
+            "imagePath": "/path/to/image3.jpg"
+        }
+    ]
+}

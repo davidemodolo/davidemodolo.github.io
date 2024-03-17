@@ -23,20 +23,6 @@ body {
     flex-direction: column;
   }
 
-  .container-entry {
-    max-width: 900px;
-    width: 90%;
-    padding: 10px;
-    margin: 0px 10px 10px 10px;
-    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-    border-radius: 8px;
-    border: 1px solid;
-    border-color: var(--text-color);
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    display: flex;
-  }
   .container-section {
     max-width: 900px;
     width: 90%;
@@ -56,11 +42,24 @@ body {
     padding: 10px;
     margin: 10px 10px 0px 10px;
   }
-  /* 
-  .container:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-  } */
+  .container-list {
+    max-width: 900px;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+  }
+  .container-entry {
+    flex:1;
+    max-width: 900px;
+    width: 100%;
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--text-color);
+  }
 
   button{
     padding: 10px 20px;
