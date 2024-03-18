@@ -43,31 +43,82 @@ body {
     margin: 10px 10px 0px 10px;
   }
   .container-list {
-    max-width: 900px;
-    width: 100%;
-    padding: 10px;
+    margin: 10px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     display: flex;
-    flex-wrap: wrap;
-    overflow-x: hidden;
   }
   .container-entry {
-    flex:1;
     max-width: 900px;
     width: 100%;
+    height: 100%;
     padding: 10px;
     margin: 0px 0px 10px 0px;
     border-radius: 8px;
     border: 1px solid;
     border-color: var(--text-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+  .container-project-info {
+    flex:1;
+    max-width: 900px;
+    width: 90%;
+    height: 100%;
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--secondary-color);
+  }
+  .container-project-elements {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  button{
+  .tag {
+    font-size: 16px;
+    margin: 5px 5px 5px 5px;
+    padding: 5px 10px;
+    font-family: fontRobotoCondensed;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    border: none;
+  }
+
+  .container-tags{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .project-name {
+    font-size: 36px;
+    font-weight: bold;
+    font-family: fontRobotoCondensed;
+    color: var(--text-color);
+  }
+
+  .project-description {
+    font-size: 20px;
+    font-family: fontRobotoCondensed;
+    color: var(--text-color);
+  }
+
+  button {
     padding: 10px 20px;
     margin: 10px;
-    border: none;
     border-radius: 8px;
-    background-color: var(--accent-color);
+    border: none;
     color: var(--text-color);
+    background-color: var(--accent-color);
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -75,10 +126,22 @@ body {
     font-family: fontBiggerDisplay;
   }
 
-  .btn-icon {
-    width: 16px;
-    height: 16px;
+  /*if button inside a div with class .container-project-info, set its width to 100%*/
+  .container-project-elements button {
+    width: 100%;
   }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  .btn-icon {
+    width: 16px; 
+    height: 16px; 
+    margin-right: 8px;
+    fill: var(--text-color);
+  }
+  
 
   h1 {
     color: var(--text-color);
@@ -118,3 +181,8 @@ body {
     
   }
   
+  img {
+    width: 400px;
+    height: auto;
+    border-radius: 8px;
+  }
