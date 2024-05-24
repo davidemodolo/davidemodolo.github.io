@@ -1,0 +1,12 @@
+[
+    {
+        "audio_path": "sounds/extra/sound1.wav",
+        "title": "sound1",
+        "class": "extra"
+    },
+    {
+        "audio_path": "sounds/zanzara/Parenzo \u00e8 emozionato.mp3",
+        "title": "Parenzo \u00e8 emozionato",
+        "class": "zanzara"
+    }
+]

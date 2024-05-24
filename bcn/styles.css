@@ -1,0 +1,141 @@
+body {
+    font-family: Ubuntu, sans-serif;
+    color: #ccc;
+    margin: 0;
+    padding: 0;
+    background-color: #272727;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.panels {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.panel {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.panel img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /* set it greyscale */
+    filter: grayscale(100%);
+}
+
+.panel p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.panel:hover {
+    transform: scale(1.1);
+}
+
+.search-bar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Existing styles */
+
+.grid-item {
+    width: 150px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.9);
+    color: black;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+
+.grid-item.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.grid-item.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.ccrizzi {
+    background: rgb(52, 114, 219);
+}
+
+.zanzara {
+    background: rgb(57, 171, 84);
+}
+
+.extra {
+    background: rgb(228, 113, 9);
+}
+
+.grid-item audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.play-icon,
+.stop-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.icon {
+    animation: icon-animation 0.1s ease;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+@keyframes icon-animation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.panel.selected {
+    transform: scale(1.1);
+}
+
+.panel.selected img {
+    filter: grayscale(0%);
+}
