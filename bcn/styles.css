@@ -6,8 +6,25 @@ body {
     background-color: #272727;
 }
 
+* {
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-tap-highlight-color: transparent;
+
+
+  };
+  
+  button, 
+  button:active, 
+  button:focus {
+    outline: none;
+  };
+
 .container {
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     padding-top: 20px;
 }
@@ -47,7 +64,7 @@ body {
 }
 
 .search-bar input {
-    width: 50%;
+    width: 80%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -64,7 +81,7 @@ body {
 /* Existing styles */
 
 .grid-item {
-    width: 150px;
+    width: 110px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
