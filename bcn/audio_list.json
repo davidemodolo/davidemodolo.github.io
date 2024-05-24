@@ -8,5 +8,10 @@
         "audio_path": "sounds/zanzara/Parenzo \u00e8 emozionato.mp3",
         "title": "Parenzo \u00e8 emozionato",
         "class": "zanzara"
+    },
+    {
+        "audio_path": "sounds/ccrizzi/Mamma mia socio.mp3",
+        "title": "Mamma mia socio",
+        "class": "ccrizzi"
     }
 ]
