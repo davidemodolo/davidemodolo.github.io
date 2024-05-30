@@ -5,6 +5,11 @@
         "class": "extra"
     },
     {
+        "audio_path": "sounds/zanzara/Mario Giordano Halloween.mp3",
+        "title": "Mario Giordano Halloween",
+        "class": "zanzara"
+    },
+    {
         "audio_path": "sounds/zanzara/Parenzo \u00e8 emozionato.mp3",
         "title": "Parenzo \u00e8 emozionato",
         "class": "zanzara"
