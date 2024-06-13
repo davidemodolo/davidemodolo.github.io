@@ -20,6 +20,11 @@
         "class": "zanzara"
     },
     {
+        "audio_path": "sounds/zanzara/Chiedimelo.mp3",
+        "title": "Chiedimelo",
+        "class": "zanzara"
+    },
+    {
         "audio_path": "sounds/ccrizzi/Mamma mia socio.mp3",
         "title": "Mamma mia socio",
         "class": "ccrizzi"
