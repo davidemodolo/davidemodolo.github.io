@@ -1,8 +1,8 @@
 :root {
-  --primary-color: #B9DBB7;
+  --primary-color: #00231B ;
   --secondary-color: #E4E8D4;
   --accent-color: #73C787;
-  --text-color: #00231B;
+  --text-color: #E4E8D4;
 }
 @font-face {
   font-family: fontBiggerDisplay;
@@ -13,6 +13,7 @@
   src: url('../resources/fonts/RobotoCondensed-VariableFont_wght.ttf');
   font-weight: 300;
 }
+
 body {
     background-color: var(--primary-color);
     margin: 0px;
@@ -68,7 +69,6 @@ body {
   .container-project-info {
     flex:1;
     max-width: 900px;
-    width: 90%;
     height: 100%;
     padding: 10px;
     margin: 0px 0px 10px 0px;
@@ -98,26 +98,43 @@ body {
     display: flex;
     flex-wrap: wrap;
   }
+  .container-project-elements button {
+    max-width: 900px;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 0px;
+    border-radius: 8px;
+    border: none;
+    color: var(--primary-color);
+    background-color: var(--accent-color);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: fontBiggerDisplay;
+  }
 
   .project-name {
+    margin: 10px;
     font-size: 36px;
     font-weight: bold;
     font-family: fontRobotoCondensed;
-    color: var(--text-color);
+    color: var(--primary-color);
   }
 
   .project-description {
+    margin: 10px;
     font-size: 20px;
     font-family: fontRobotoCondensed;
-    color: var(--text-color);
+    color: var(--primary-color);
   }
 
-  button {
+  .icon-button {
     padding: 10px 20px;
     margin: 10px;
     border-radius: 8px;
     border: none;
-    color: var(--text-color);
+    color: var(--primary-color);
     background-color: var(--accent-color);
     font-size: 16px;
     font-weight: bold;
@@ -127,9 +144,7 @@ body {
   }
 
   /*if button inside a div with class .container-project-info, set its width to 100%*/
-  .container-project-elements button {
-    width: 100%;
-  }
+  
   
   button:hover {
     transform: scale(1.05);
@@ -182,7 +197,8 @@ body {
   }
   
   img {
-    width: 400px;
-    height: auto;
+    margin: 0px 10px 0px 0px;
+    width: 200px;
+    height: 100%;
     border-radius: 8px;
   }

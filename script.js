@@ -2,21 +2,17 @@ const university_projects_div = document.getElementById(
   "container-entries-university-projects"
 );
 
-import university_projects_json from "./entries/university_projects/university_projects.json" assert { type: "json" };
 
-university_projects_json.forEach((entry, index) => {
+function createProjectEntry(entry) {
   const div = document.createElement("div");
   div.classList.add("container-entry");
-//   if (index === 0) {
-//     div.classList.add("main-entry");
-//   }
   const img = document.createElement("img");
   img.src = entry.imagePath;
   img.alt = entry.name;
   div.appendChild(img);
 
   const container_project_elements = document.createElement("div");
-    container_project_elements.classList.add("container-project-elements");
+  container_project_elements.classList.add("container-project-elements");
   const container_project_info = document.createElement("div");
   container_project_info.classList.add("container-project-info");
   const title = document.createElement("p");
@@ -47,5 +43,10 @@ university_projects_json.forEach((entry, index) => {
   container_project_elements.appendChild(button);
   div.appendChild(container_project_elements);
 
-  university_projects_div.appendChild(div);
+  return div;
+}
+
+import projects from "./entries/university_projects/university_proj.js";
+projects.forEach((entry, index) => {
+  university_projects_div.appendChild(createProjectEntry(entry));
 });
