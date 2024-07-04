@@ -4,7 +4,7 @@ const WORK = "work";
 function createProjectEntry(entry) {
   const div = document.createElement("div");
   div.classList.add("container-entry");
-  if (entry.imagePath != "") { 
+  if (entry.imagePath != "" && false) { 
   const img = document.createElement("img");
   img.src = entry.imagePath;
   img.alt = entry.name;
