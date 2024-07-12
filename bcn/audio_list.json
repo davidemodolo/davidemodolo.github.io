@@ -5,6 +5,21 @@
         "class": "extra"
     },
     {
+        "audio_path": "sounds/ccrizzi/Mamma mia socio.mp3",
+        "title": "Mamma mia socio",
+        "class": "ccrizzi"
+    },
+    {
+        "audio_path": "sounds/extra/non \u00e8 il bancomat.mp3",
+        "title": "non \u00e8 il bancomat",
+        "class": "extra"
+    },
+    {
+        "audio_path": "sounds/zanzara/Chiedimelo.mp3",
+        "title": "Chiedimelo",
+        "class": "zanzara"
+    },
+    {
         "audio_path": "sounds/zanzara/Lotta Tigre.mp3",
         "title": "Lotta Tigre",
         "class": "zanzara"
@@ -18,15 +33,5 @@
         "audio_path": "sounds/zanzara/Parenzo \u00e8 emozionato.mp3",
         "title": "Parenzo \u00e8 emozionato",
         "class": "zanzara"
-    },
-    {
-        "audio_path": "sounds/zanzara/Chiedimelo.mp3",
-        "title": "Chiedimelo",
-        "class": "zanzara"
-    },
-    {
-        "audio_path": "sounds/ccrizzi/Mamma mia socio.mp3",
-        "title": "Mamma mia socio",
-        "class": "ccrizzi"
     }
 ]
