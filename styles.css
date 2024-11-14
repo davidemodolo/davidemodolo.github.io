@@ -221,3 +221,12 @@ body {
   .dot:hover {
     cursor: pointer;
   }
+
+  canvas {
+    display: block;
+  }
+  #p5-canvas-container {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
