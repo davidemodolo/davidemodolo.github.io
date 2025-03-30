@@ -1,0 +1,222 @@
+[
+  {
+    "dayNumber": 1,
+    "date": "02-04-2025",
+    "location": "Trento",
+    "name": "Start of the journey",
+    "description": "Train from Trento to Verona, then another train from Verona to Milano, then bus to Malpensa Airport and finally flight to Beijing.",
+    "icon": "airplane",
+    "videos": [],
+    "images": ["assets/day1/trento1.jpg", "assets/day1/trento2.jpg"]
+  },
+  {
+    "dayNumber": 2,
+    "date": "03-04-2025",
+    "location": "Beijing",
+    "name": "Arrive in China",
+    "description": "Reach the hotel and going a walk in the city. First street food experience?",
+    "icon": "shopping_bag",
+    "videos": ["https://www.youtube.com/watch?v=video_id_2"],
+    "images": ["assets/day2/verona1.jpg", "assets/day2/verona2.jpg"]
+  },
+  {
+    "dayNumber": 3,
+    "date": "04-04-2025",
+    "location": "Beijing",
+    "name": "Summer Palace",
+    "description": "",
+    "icon": "museum",
+    "videos": [],
+    "images": ["assets/day3/img3.png"]
+  },
+  {
+    "dayNumber": 4,
+    "date": "05-04-2025",
+    "location": "Beijing",
+    "name": "Street food & shopping",
+    "description": "",
+    "icon": "restaurant",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 5,
+    "date": "06-04-2025",
+    "location": "Beijing",
+    "name": "Relax and prepare for the flight to Tokyo",
+    "description": "",
+    "icon": "shopping_bag",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 6,
+    "date": "07-04-2025",
+    "location": "Kyoto",
+    "name": "Arrive at Kyoto at night",
+    "description": "",
+    "icon": "airplane",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 7,
+    "date": "08-04-2025",
+    "location": "Kyoto",
+    "name": "Rest day after the flight",
+    "description": "",
+    "icon": "restaurant",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 8,
+    "date": "09-04-2025",
+    "location": "Kyoto",
+    "name": "Relax and shopping",
+    "description": "",
+    "icon": "shopping_bag",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 9,
+    "date": "10-04-2025",
+    "location": "Hiroshima",
+    "name": "Hiroshima Peace Memorial Museum",
+    "description": "Exploring Tokyo, Japan.",
+    "icon": "museum",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 10,
+    "date": "11-04-2025",
+    "location": "Osaka",
+    "name": "Day trip to Osaka",
+    "description": "",
+    "icon": "shopping_bag",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 11,
+    "date": "12-04-2025",
+    "location": "Nara",
+    "name": "Morning trip to Nara",
+    "description": "",
+    "icon": "museum",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 12,
+    "date": "13-04-2025",
+    "location": "Tokyo",
+    "name": "Arrive at Tokyo before dinner",
+    "description": "",
+    "icon": "train",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 13,
+    "date": "14-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 14,
+    "date": "15-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 15,
+    "date": "16-04-2025",
+    "location": "Tokyo",
+    "name": "Seiko Museum & Tokyo Tower",
+    "description": "",
+    "icon": "museum",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 16,
+    "date": "17-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 17,
+    "date": "18-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 18,
+    "date": "19-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 19,
+    "date": "20-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 20,
+    "date": "21-04-2025",
+    "location": "Tokyo",
+    "name": "to define",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 21,
+    "date": "22-04-2025",
+    "location": "Shanghai",
+    "name": "8h wait at Shanghai airport",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  },
+  {
+    "dayNumber": 22,
+    "date": "23-04-2025",
+    "location": "Italy",
+    "name": "Back Home",
+    "description": "",
+    "icon": "location_on",
+    "videos": [],
+    "images": []
+  }
+]
