@@ -35,9 +35,7 @@
         "description": "",
         "icon": "museum",
         "videos": [],
-        "images": [
-            "assets/day3/img3.png"
-        ]
+        "images": []
     },
     {
         "dayNumber": 4,
