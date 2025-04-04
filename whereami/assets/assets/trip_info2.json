@@ -8,8 +8,11 @@
         "icon": "airplane",
         "videos": [],
         "images": [
-            "assets/day1/trento1.jpg",
-            "assets/day1/trento2.jpg"
+            "assets/day1/PXL_20250402_080745528.jpg",
+            "assets/day1/PXL_20250402_104223817.jpg",
+            "assets/day1/PXL_20250402_130407816.jpg",
+            "assets/day1/PXL_20250402_130407817.jpg",
+            "assets/day1/PXL_20250402_230210975.jpg"
         ]
     },
     {
@@ -23,8 +26,16 @@
             "https://www.youtube.com/watch?v=video_id_2"
         ],
         "images": [
-            "assets/day2/verona1.jpg",
-            "assets/day2/verona2.jpg"
+            "assets/day2/PXL_20250403_082522682.jpg",
+            "assets/day2/PXL_20250403_082601425.jpg",
+            "assets/day2/PXL_20250403_082910738.jpg",
+            "assets/day2/PXL_20250403_090121025.jpg",
+            "assets/day2/PXL_20250403_094628599.jpg",
+            "assets/day2/PXL_20250403_094652274.jpg",
+            "assets/day2/PXL_20250403_102756863.jpg",
+            "assets/day2/PXL_20250403_102756864.jpg",
+            "assets/day2/PXL_20250403_113438534.jpg",
+            "assets/day2/PXL_20250403_114643599.jpg"
         ]
     },
     {
