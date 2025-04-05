@@ -20,7 +20,7 @@
         "date": "03-04-2025",
         "location": "Beijing",
         "name": "Arrive in China",
-        "description": "Random walk, shopping mall, xiaomi's cars and hot-pot",
+        "description": "Random walk, shopping mall, xiaomi's car and hot-pot",
         "icon": "shopping_bag",
         "videos": [
             "https://www.youtube.com/watch?v=video_id_2"
@@ -43,10 +43,26 @@
         "date": "04-04-2025",
         "location": "Beijing",
         "name": "Summer Palace",
-        "description": "",
+        "description": "Summer Palace, street food and finally scorpions on a stick.",
         "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day3/PXL_20250404_014158430.jpg",
+            "assets/day3/PXL_20250404_025307724.jpg",
+            "assets/day3/PXL_20250404_031644114.jpg",
+            "assets/day3/PXL_20250404_040125752.jpg",
+            "assets/day3/PXL_20250404_050532059.jpg",
+            "assets/day3/PXL_20250404_050537569.jpg",
+            "assets/day3/PXL_20250404_050712476.jpg",
+            "assets/day3/PXL_20250404_050833979.jpg",
+            "assets/day3/PXL_20250404_052515999.jpg",
+            "assets/day3/PXL_20250404_053208690.jpg",
+            "assets/day3/PXL_20250404_055041085.jpg",
+            "assets/day3/PXL_20250404_082734817.jpg",
+            "assets/day3/PXL_20250404_105650151.jpg",
+            "assets/day3/PXL_20250404_114150456.jpg",
+            "assets/day3/PXL_20250404_114305675.jpg"
+        ]
     },
     {
         "dayNumber": 4,
