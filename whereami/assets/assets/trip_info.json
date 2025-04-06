@@ -68,21 +68,39 @@
         "dayNumber": 4,
         "date": "05-04-2025",
         "location": "Beijing",
-        "name": "Street food & shopping",
-        "description": "",
-        "icon": "restaurant",
+        "name": "Pause",
+        "description": "Random walk, relax and catch up with sleep",
+        "icon": "shopping_bag",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day4/PXL_20250405_033939247.jpg",
+            "assets/day4/PXL_20250405_040953628.jpg"
+        ]
     },
     {
         "dayNumber": 5,
         "date": "06-04-2025",
         "location": "Beijing",
-        "name": "Relax and prepare for the flight to Tokyo",
-        "description": "",
-        "icon": "shopping_bag",
+        "name": "Tiananmen Square",
+        "description": "Tiananmen Square and prepare for the flight",
+        "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day5/PXL_20250406_003633702.jpg",
+            "assets/day5/PXL_20250406_005029319.jpg",
+            "assets/day5/PXL_20250406_013927486.jpg",
+            "assets/day5/PXL_20250406_015416769.jpg",
+            "assets/day5/PXL_20250406_040420392.jpg",
+            "assets/day5/PXL_20250406_040423610.jpg",
+            "assets/day5/PXL_20250406_042313524.jpg",
+            "assets/day5/PXL_20250406_042607562.jpg",
+            "assets/day5/PXL_20250406_042753281.jpg",
+            "assets/day5/PXL_20250406_042804956.jpg",
+            "assets/day5/PXL_20250406_043117790.jpg",
+            "assets/day5/PXL_20250406_043506647.jpg",
+            "assets/day5/PXL_20250406_044006208.jpg",
+            "assets/day5/PXL_20250406_054935978.jpg"
+        ]
     },
     {
         "dayNumber": 6,
