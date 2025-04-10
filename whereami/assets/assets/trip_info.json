@@ -4,7 +4,7 @@
         "date": "02-04-2025",
         "location": "Trento",
         "name": "Start of the journey",
-        "description": "Train from Trento to Verona, then another train from Verona to Milano, then bus to Malpensa Airport and finally flight to Beijing.",
+        "description": "Train from Trento to Verona, then another train from Verona to Milano, then bus to Malpensa Airport and finally flight to Beijing.\nSteps: 6573",
         "icon": "airplane",
         "videos": [],
         "images": [
@@ -20,7 +20,7 @@
         "date": "03-04-2025",
         "location": "Beijing",
         "name": "Arrive in China",
-        "description": "Random walk, shopping mall, xiaomi's car and hot-pot",
+        "description": "Random walk, shopping mall, xiaomi's car and hot-pot\nSteps: 27123",
         "icon": "shopping_bag",
         "videos": [
             "https://www.youtube.com/watch?v=video_id_2"
@@ -43,7 +43,7 @@
         "date": "04-04-2025",
         "location": "Beijing",
         "name": "Summer Palace",
-        "description": "Summer Palace, street food and finally scorpions on a stick.",
+        "description": "Summer Palace, street food and finally scorpions on a stick.\nSteps: 22971",
         "icon": "museum",
         "videos": [],
         "images": [
@@ -69,7 +69,7 @@
         "date": "05-04-2025",
         "location": "Beijing",
         "name": "Pause",
-        "description": "Random walk, relax and catch up with sleep",
+        "description": "Random walk, relax and catch up with sleep\nSteps: 23352",
         "icon": "shopping_bag",
         "videos": [],
         "images": [
@@ -82,7 +82,7 @@
         "date": "06-04-2025",
         "location": "Beijing",
         "name": "Tiananmen Square",
-        "description": "Tiananmen Square and prepare for the flight",
+        "description": "Tiananmen Square and prepare for the flight\nSteps: 20953",
         "icon": "museum",
         "videos": [],
         "images": [
@@ -107,36 +107,56 @@
         "date": "07-04-2025",
         "location": "Kyoto",
         "name": "Arrive at Kyoto at night",
-        "description": "",
+        "description": "Steps: 12367",
         "icon": "airplane",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day6/PXL_20250407_003058802.jpg",
+            "assets/day6/PXL_20250407_055417944.jpg"
+        ]
     },
     {
         "dayNumber": 7,
         "date": "08-04-2025",
         "location": "Kyoto",
-        "name": "Rest day after the flight",
-        "description": "",
+        "name": "Exploring the surroundings",
+        "description": "Steps: 28585",
         "icon": "restaurant",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day7/PXL_20250408_010520967.jpg",
+            "assets/day7/PXL_20250408_015827591.jpg",
+            "assets/day7/PXL_20250408_025123899.jpg",
+            "assets/day7/PXL_20250408_025356616.jpg",
+            "assets/day7/PXL_20250408_055035838.jpg",
+            "assets/day7/PXL_20250408_085030217.jpg"
+        ]
     },
     {
         "dayNumber": 8,
         "date": "09-04-2025",
-        "location": "Kyoto",
-        "name": "Relax and shopping",
+        "location": "Hiroshima",
+        "name": "Hiroshima Peace Memorial Museum and Park\nSteps: 34489",
         "description": "",
         "icon": "shopping_bag",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day8/PXL_20250409_003434558.jpg",
+            "assets/day8/PXL_20250409_023607634.jpg",
+            "assets/day8/PXL_20250409_051108213.jpg",
+            "assets/day8/PXL_20250409_055900083.jpg",
+            "assets/day8/PXL_20250409_060245241.jpg",
+            "assets/day8/PXL_20250409_061459756.jpg",
+            "assets/day8/PXL_20250409_061637771.jpg",
+            "assets/day8/PXL_20250409_064358676.jpg",
+            "assets/day8/PXL_20250409_073129760.jpg"
+        ]
     },
     {
         "dayNumber": 9,
         "date": "10-04-2025",
-        "location": "Hiroshima",
-        "name": "Hiroshima Peace Memorial Museum",
+        "location": "Kyoto",
+        "name": "Nintendo Store, Pok\u00e9mon Center and Castle(?)",
         "description": "Exploring Tokyo, Japan.",
         "icon": "museum",
         "videos": [],
