@@ -4,7 +4,8 @@
         "date": "02-04-2025",
         "location": "Trento",
         "name": "Start of the journey",
-        "description": "Train from Trento to Verona, then another train from Verona to Milano, then bus to Malpensa Airport and finally flight to Beijing.\nSteps: 6573",
+        "description": "Train from Trento to Verona, then another train from Verona to Milano, then bus to Malpensa Airport and finally flight to Beijing.\n\ud83d\udc63Steps: 6573",
+        "steps": 6573,
         "icon": "airplane",
         "videos": [],
         "images": [
@@ -20,7 +21,8 @@
         "date": "03-04-2025",
         "location": "Beijing",
         "name": "Arrive in China",
-        "description": "Random walk, shopping mall, xiaomi's car and hot-pot\nSteps: 27123",
+        "description": "Random walk, shopping mall, xiaomi's car and hot-pot\n\ud83d\udc63Steps: 27123",
+        "steps": 27123,
         "icon": "shopping_bag",
         "videos": [
             "https://www.youtube.com/watch?v=video_id_2"
@@ -43,7 +45,8 @@
         "date": "04-04-2025",
         "location": "Beijing",
         "name": "Summer Palace",
-        "description": "Summer Palace, street food and finally scorpions on a stick.\nSteps: 22971",
+        "description": "Summer Palace, street food and finally scorpions on a stick.\n\ud83d\udc63Steps: 22971",
+        "steps": 22971,
         "icon": "museum",
         "videos": [],
         "images": [
@@ -69,7 +72,8 @@
         "date": "05-04-2025",
         "location": "Beijing",
         "name": "Pause",
-        "description": "Random walk, relax and catch up with sleep\nSteps: 23352",
+        "description": "Random walk, relax and catch up with sleep\n\ud83d\udc63Steps: 23352",
+        "steps": 23352,
         "icon": "shopping_bag",
         "videos": [],
         "images": [
@@ -82,7 +86,8 @@
         "date": "06-04-2025",
         "location": "Beijing",
         "name": "Tiananmen Square",
-        "description": "Tiananmen Square and prepare for the flight\nSteps: 20953",
+        "description": "Tiananmen Square and prepare for the flight\n\ud83d\udc63Steps: 20953",
+        "steps": 20953,
         "icon": "museum",
         "videos": [],
         "images": [
@@ -107,7 +112,8 @@
         "date": "07-04-2025",
         "location": "Kyoto",
         "name": "Arrive at Kyoto at night",
-        "description": "Steps: 12367",
+        "description": "\ud83d\udc63Steps: 12367",
+        "steps": 12367,
         "icon": "airplane",
         "videos": [],
         "images": [
@@ -120,7 +126,8 @@
         "date": "08-04-2025",
         "location": "Kyoto",
         "name": "Exploring the surroundings",
-        "description": "Steps: 28585",
+        "description": "\ud83d\udc63Steps: 28585",
+        "steps": 28585,
         "icon": "restaurant",
         "videos": [],
         "images": [
@@ -136,9 +143,10 @@
         "dayNumber": 8,
         "date": "09-04-2025",
         "location": "Hiroshima",
-        "name": "Hiroshima Peace Memorial Museum and Park\nSteps: 34489",
-        "description": "",
-        "icon": "shopping_bag",
+        "name": "Hiroshima Peace Memorial Museum and Park",
+        "description": "\ud83d\udc63Steps: 34489",
+        "steps": 34489,
+        "icon": "museum",
         "videos": [],
         "images": [
             "assets/day8/PXL_20250409_003434558.jpg",
@@ -156,11 +164,31 @@
         "dayNumber": 9,
         "date": "10-04-2025",
         "location": "Kyoto",
-        "name": "Nintendo Store, Pok\u00e9mon Center and Castle(?)",
-        "description": "Exploring Tokyo, Japan.",
+        "name": "Nintendo Store, Pok\u00e9mon Center, Nij\u014d Castle and Kyoto Tower",
+        "description": "\ud83d\udc63",
+        "steps": 28042,
         "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day9/PXL_20250410_022428222.jpg",
+            "assets/day9/PXL_20250410_031700627.jpg",
+            "assets/day9/PXL_20250410_031700628.png",
+            "assets/day9/PXL_20250410_031700629.png",
+            "assets/day9/PXL_20250410_031700630.png",
+            "assets/day9/PXL_20250410_043041774.jpg",
+            "assets/day9/PXL_20250410_064106295.jpg",
+            "assets/day9/PXL_20250410_070042679.jpg",
+            "assets/day9/PXL_20250410_070106999.jpg",
+            "assets/day9/PXL_20250410_070126664.jpg",
+            "assets/day9/PXL_20250410_070801158.jpg",
+            "assets/day9/PXL_20250410_070846795.jpg",
+            "assets/day9/PXL_20250410_071101341.jpg",
+            "assets/day9/PXL_20250410_072720780.jpg",
+            "assets/day9/PXL_20250410_075840184.jpg",
+            "assets/day9/PXL_20250410_082756628.jpg",
+            "assets/day9/PXL_20250410_090452229.jpg",
+            "assets/day9/PXL_20250410_090728126.jpg"
+        ]
     },
     {
         "dayNumber": 10,
@@ -170,7 +198,20 @@
         "description": "",
         "icon": "shopping_bag",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day10/PXL_20250411_032334784.jpg",
+            "assets/day10/PXL_20250411_032847153.jpg",
+            "assets/day10/PXL_20250411_032917704.jpg",
+            "assets/day10/PXL_20250411_035707433.jpg",
+            "assets/day10/PXL_20250411_035802123.jpg",
+            "assets/day10/PXL_20250411_035826314.jpg",
+            "assets/day10/PXL_20250411_040643437.jpg",
+            "assets/day10/PXL_20250411_043754961.jpg",
+            "assets/day10/PXL_20250411_043916660.jpg",
+            "assets/day10/PXL_20250411_052410566.jpg",
+            "assets/day10/PXL_20250411_052433489.jpg",
+            "assets/day10/PXL_20250411_055215663.jpg"
+        ]
     },
     {
         "dayNumber": 11,
