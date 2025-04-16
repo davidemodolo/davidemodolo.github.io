@@ -165,7 +165,7 @@
         "date": "10-04-2025",
         "location": "Kyoto",
         "name": "Nintendo Store, Pok\u00e9mon Center, Nij\u014d Castle and Kyoto Tower",
-        "description": "\ud83d\udc63",
+        "description": "\ud83d\udc63Steps: 28042",
         "steps": 28042,
         "icon": "museum",
         "videos": [],
@@ -195,7 +195,8 @@
         "date": "11-04-2025",
         "location": "Nara",
         "name": "Day trip to Nara",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 29991",
+        "steps": 29991,
         "icon": "shopping_bag",
         "videos": [],
         "images": [
@@ -218,7 +219,8 @@
         "date": "12-04-2025",
         "location": "Osaka",
         "name": "Day trip to Osaka",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 21655",
+        "steps": 21655,
         "icon": "museum",
         "videos": [],
         "images": [
@@ -233,7 +235,8 @@
         "date": "13-04-2025",
         "location": "Tokyo",
         "name": "Arrive at Tokyo before dinner",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 16573",
+        "steps": 16573,
         "icon": "train",
         "videos": [],
         "images": [
@@ -250,7 +253,8 @@
         "date": "14-04-2025",
         "location": "Tokyo",
         "name": "Ueno Park",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 22142",
+        "steps": 22142,
         "icon": "museum",
         "videos": [],
         "images": [
@@ -267,7 +271,8 @@
         "date": "15-04-2025",
         "location": "Tokyo",
         "name": "Random",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 12502",
+        "steps": 12502,
         "icon": "shopping_bag",
         "videos": [],
         "images": [
@@ -282,7 +287,8 @@
         "date": "16-04-2025",
         "location": "Tokyo",
         "name": "Seiko Museum & Tokyo Tower",
-        "description": "",
+        "description": "\ud83d\udc63Steps: 19935",
+        "steps": 19935,
         "icon": "museum",
         "videos": [],
         "images": [
