@@ -193,8 +193,8 @@
     {
         "dayNumber": 10,
         "date": "11-04-2025",
-        "location": "Osaka",
-        "name": "Day trip to Osaka",
+        "location": "Nara",
+        "name": "Day trip to Nara",
         "description": "",
         "icon": "shopping_bag",
         "videos": [],
@@ -216,12 +216,17 @@
     {
         "dayNumber": 11,
         "date": "12-04-2025",
-        "location": "Nara",
-        "name": "Morning trip to Nara",
+        "location": "Osaka",
+        "name": "Day trip to Osaka",
         "description": "",
         "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day11/PXL_20250412_013033842.jpg",
+            "assets/day11/PXL_20250412_023640458.jpg",
+            "assets/day11/PXL_20250412_041636932.jpg",
+            "assets/day11/PXL_20250412_044905320.jpg"
+        ]
     },
     {
         "dayNumber": 12,
@@ -231,27 +236,46 @@
         "description": "",
         "icon": "train",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day12/PXL_20250412_064326288.jpg",
+            "assets/day12/PXL_20250413_011037422.jpg",
+            "assets/day12/PXL_20250413_011041027.jpg",
+            "assets/day12/PXL_20250413_011125248.jpg",
+            "assets/day12/PXL_20250413_012117508.jpg",
+            "assets/day12/PXL_20250413_105231863.jpg"
+        ]
     },
     {
         "dayNumber": 13,
         "date": "14-04-2025",
         "location": "Tokyo",
-        "name": "to define",
+        "name": "Ueno Park",
         "description": "",
-        "icon": "location_on",
+        "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day13/PXL_20250414_034925092.jpg",
+            "assets/day13/PXL_20250414_044829512.jpg",
+            "assets/day13/PXL_20250414_052252626.jpg",
+            "assets/day13/PXL_20250414_053835370.jpg",
+            "assets/day13/PXL_20250414_083526422.jpg",
+            "assets/day13/PXL_20250414_084422901.jpg"
+        ]
     },
     {
         "dayNumber": 14,
         "date": "15-04-2025",
         "location": "Tokyo",
-        "name": "to define",
+        "name": "Random",
         "description": "",
-        "icon": "location_on",
+        "icon": "shopping_bag",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day14/PXL_20250415_045102691.jpg",
+            "assets/day14/PXL_20250415_060502120.jpg",
+            "assets/day14/PXL_20250415_061229739.jpg",
+            "assets/day14/PXL_20250415_072629054.jpg"
+        ]
     },
     {
         "dayNumber": 15,
@@ -261,7 +285,21 @@
         "description": "",
         "icon": "museum",
         "videos": [],
-        "images": []
+        "images": [
+            "assets/day15/PXL_20250416_052018058.jpg",
+            "assets/day15/PXL_20250416_052249192.jpg",
+            "assets/day15/PXL_20250416_052941891.jpg",
+            "assets/day15/PXL_20250416_054015344.jpg",
+            "assets/day15/PXL_20250416_054035434.jpg",
+            "assets/day15/PXL_20250416_054212094.jpg",
+            "assets/day15/PXL_20250416_084819313.jpg",
+            "assets/day15/PXL_20250416_124034853.jpg",
+            "assets/day15/Screenshot from 2025-04-16 22-37-11.png",
+            "assets/day15/Screenshot from 2025-04-16 22-37-40.png",
+            "assets/day15/Screenshot from 2025-04-16 22-38-05.png",
+            "assets/day15/Screenshot from 2025-04-16 22-38-14.png",
+            "assets/day15/Screenshot from 2025-04-16 22-39-47.png"
+        ]
     },
     {
         "dayNumber": 16,
