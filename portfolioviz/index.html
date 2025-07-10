@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Forecasting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e8ed;
+        }
+
+        .control-group h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .control-item {
+            margin-bottom: 20px;
+        }
+
+        .control-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .control-item input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .control-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-item input[type="range"]::-webkit-slider-thumb:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .control-item input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-item input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+        .allocation-warning {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .allocation-ok {
+            color: #27ae60;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #e1e8ed;
+        }
+
+        .summary-card h4 {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card .value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .summary-card.positive .value {
+            color: #27ae60;
+        }
+
+        .summary-card.negative .value {
+            color: #e74c3c;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e8ed;
+        }
+
+        .chart-container h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>💰 Portfolio Forecasting Tool</h1>
+
+        <!-- Export PDF Button -->
+        <div style="text-align:right; margin-bottom: 10px;">
+            <button id="exportPdfBtn"
+                style="padding:8px 18px; border-radius:8px; border:none; background:#3498db; color:white; font-weight:600; cursor:pointer;">Export
+                PDF</button>
+        </div>
+
+        <div class="controls-grid">
+            <!-- Basic Parameters -->
+            <div class="control-group">
+                <h3>📊 Basic Parameters</h3>
+                <div class="control-item">
+                    <label for="startingSum">Starting Investment Sum (€)</label>
+                    <input type="number" id="startingSum" value="10000" min="0" step="1000">
+                </div>
+                <div class="control-item">
+                    <label for="emergencyFund">Emergency Fund (€)</label>
+                    <input type="number" id="emergencyFund" value="5000" min="0" step="1000">
+                </div>
+                <div class="control-item">
+                    <label for="monthlyContribution">Monthly Contribution (€)</label>
+                    <input type="number" id="monthlyContribution" value="500" min="0" step="50">
+                </div>
+                <div class="control-item">
+                    <label for="timeHorizon">Time Horizon: <span id="timeHorizonValue">10</span> years</label>
+                    <input type="range" id="timeHorizon" min="1" max="50" value="10">
+                </div>
+                <div class="control-item">
+                    <label for="inflation">Expected Inflation: <span id="inflationValue">2</span>%</label>
+                    <input type="range" id="inflation" min="0" max="10" value="2" step="0.1">
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="inflationAdjusted" checked>
+                    <label for="inflationAdjusted">Inflation Adjust Contributions</label>
+                </div>
+            </div>
+
+            <!-- Asset Allocation -->
+            <div class="control-group">
+                <h3>📈 Asset Allocation</h3>
+                <div class="control-item">
+                    <label for="stocksAllocation">Global Stocks: <span id="stocksAllocationValue">80</span>%</label>
+                    <input type="range" id="stocksAllocation" min="0" max="100" value="80">
+                </div>
+                <div class="control-item">
+                    <label for="bondsAllocation">Global Bonds: <span id="bondsAllocationValue">15</span>%</label>
+                    <input type="range" id="bondsAllocation" min="0" max="100" value="15">
+                </div>
+                <div class="control-item">
+                    <label for="goldAllocation">Gold: <span id="goldAllocationValue">5</span>%</label>
+                    <input type="range" id="goldAllocation" min="0" max="100" value="5">
+                </div>
+                <div id="allocationTotal" class="allocation-ok">Total: 100%</div>
+            </div>
+
+            <!-- Expected Returns -->
+            <div class="control-group">
+                <h3>📊 Expected Returns</h3>
+                <div class="control-item">
+                    <label for="stocksReturn">Global Stocks: <span id="stocksReturnValue">7</span>%</label>
+                    <input type="range" id="stocksReturn" min="0" max="20" value="7" step="0.1">
+                </div>
+                <div class="control-item">
+                    <label for="bondsReturn">Global Bonds: <span id="bondsReturnValue">2.5</span>%</label>
+                    <input type="range" id="bondsReturn" min="0" max="15" value="2.5" step="0.1">
+                </div>
+                <div class="control-item">
+                    <label for="goldReturn">Gold: <span id="goldReturnValue">6</span>%</label>
+                    <input type="range" id="goldReturn" min="0" max="20" value="6" step="0.1">
+                </div>
+                <div class="control-item">
+                    <label for="cashReturn">Emergency Fund: <span id="cashReturnValue">1</span>%</label>
+                    <input type="range" id="cashReturn" min="0" max="10" value="1" step="0.1">
+                </div>
+            </div>
+
+            <!-- Pension Fund Box -->
+            <div class="control-group">
+                <h3>🏦 Pension Fund</h3>
+                <div class="control-item">
+                    <label for="pensionFund">Pension Fund Starting Value (€)</label>
+                    <input type="number" id="pensionFund" value="10000" min="0" step="500">
+                </div>
+                <div class="control-item">
+                    <label for="pensionContribution">Yearly Contribution (€)</label>
+                    <input type="number" id="pensionContribution" value="2000" min="0" step="100">
+                </div>
+                <div class="control-item">
+                    <label for="pensionReturn">Expected Return: <span id="pensionReturnValue">4.5</span>%</label>
+                    <input type="range" id="pensionReturn" min="0" max="10" value="4.5" step="0.1">
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="pensionInclude" checked>
+                    <label for="pensionInclude">Include in Plots</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card positive">
+                <h4>Final Value (Nominal)</h4>
+                <div class="value" id="finalValue">€0</div>
+            </div>
+            <div class="summary-card">
+                <h4>Final Value (Real)</h4>
+                <div class="value" id="finalRealValue">€0</div>
+            </div>
+            <div class="summary-card">
+                <h4>Total Contributed</h4>
+                <div class="value" id="totalContributed">€0</div>
+            </div>
+            <div class="summary-card" id="totalGainCard">
+                <h4>Total Gain</h4>
+                <div class="value" id="totalGain">€0</div>
+            </div>
+            <div class="summary-card" id="portfolioGainCard">
+                <h4>Portfolio Gain</h4>
+                <div class="value" id="portfolioGain">€0</div>
+            </div>
+            <!-- Emergency Fund: value + gain in one card -->
+            <div class="summary-card" id="emergencyCard">
+                <h4>Emergency Fund</h4>
+                <div class="value" id="emergencyValue">€0</div>
+                <div class="sub-value" id="emergencyGain" style="font-size:0.9em; color:#888; margin-top:4px;"></div>
+            </div>
+            <div class="summary-card" id="pensionCard">
+                <h4>Pension Fund</h4>
+                <div class="value" id="pensionValue">€0</div>
+                <div class="sub-value" id="pensionGain" style="font-size:0.9em; color:#888; margin-top:4px;"></div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-container">
+                <h3>Portfolio Value Over Time</h3>
+                <canvas id="portfolioChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Asset Breakdown</h3>
+                <canvas id="assetChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class PortfolioForecaster {
+            constructor() {
+                this.portfolioChart = null;
+                this.assetChart = null;
+                this.initializeCharts();
+                this.bindEvents();
+                this.updateCalculations();
+                this.bindExport();
+            }
+
+            initializeCharts() {
+                // Portfolio Value Chart
+                const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+                this.portfolioChart = new Chart(portfolioCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Nominal Value',
+                            data: [],
+                            borderColor: '#27ae60',
+                            backgroundColor: 'rgba(39, 174, 96, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }, {
+                            label: 'Real Value',
+                            data: [],
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return '€' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return context.dataset.label + ': €' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Asset Breakdown Chart
+                const assetCtx = document.getElementById('assetChart').getContext('2d');
+                this.assetChart = new Chart(assetCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Stocks',
+                            data: [],
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.3)',
+                            fill: true
+                        }, {
+                            label: 'Bonds',
+                            data: [],
+                            borderColor: '#f39c12',
+                            backgroundColor: 'rgba(243, 156, 18, 0.3)',
+                            fill: true
+                        }, {
+                            label: 'Gold',
+                            data: [],
+                            borderColor: '#f1c40f',
+                            backgroundColor: 'rgba(241, 196, 15, 0.3)',
+                            fill: true
+                        }, {
+                            label: 'Emergency Fund',
+                            data: [],
+                            borderColor: '#95a5a6',
+                            backgroundColor: 'rgba(149, 165, 166, 0.3)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                stacked: true,
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return '€' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return context.dataset.label + ': €' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            bindEvents() {
+                // Bind all input events
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        this.updateDisplayValues();
+                        this.updateCalculations();
+                    });
+                });
+                document.getElementById('pensionReturn').addEventListener('input', () => {
+                    document.getElementById('pensionReturnValue').textContent = document.getElementById('pensionReturn').value;
+                });
+            }
+
+            bindExport() {
+                document.getElementById('exportPdfBtn').addEventListener('click', async () => {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'pt',
+                        format: 'a4'
+                    });
+
+                    // Title
+                    doc.setFontSize(20);
+                    doc.text('Portfolio Forecasting Results', 40, 40);
+
+                    // --- Parameters Section ---
+                    let y = 70;
+                    doc.setFontSize(14);
+                    doc.text('Parameters', 40, y);
+                    doc.setFontSize(11);
+                    y += 16;
+
+                    // Basic Parameters
+                    const getVal = id => document.getElementById(id).value;
+                    const getChecked = id => document.getElementById(id).checked ? 'Yes' : 'No';
+                    const timeHorizonYears = getVal('timeHorizon');
+                    const paramLines = [
+                        `Starting Investment Sum: €${parseFloat(getVal('startingSum')).toLocaleString()}`,
+                        `Emergency Fund: €${parseFloat(getVal('emergencyFund')).toLocaleString()}`,
+                        `Monthly Contribution: €${parseFloat(getVal('monthlyContribution')).toLocaleString()}`,
+                        `Time Horizon: ${timeHorizonYears} years`,
+                        `Expected Inflation: ${getVal('inflation')}%`,
+                        `Inflation Adjust Contributions: ${getChecked('inflationAdjusted')}`,
+                        '',
+                        `Global Stocks Allocation: ${getVal('stocksAllocation')}%`,
+                        `Global Bonds Allocation: ${getVal('bondsAllocation')}%`,
+                        `Gold Allocation: ${getVal('goldAllocation')}%`,
+                        '',
+                        `Global Stocks Return: ${getVal('stocksReturn')}%`,
+                        `Global Bonds Return: ${getVal('bondsReturn')}%`,
+                        `Gold Return: ${getVal('goldReturn')}%`,
+                        `Emergency Fund Return: ${getVal('cashReturn')}%`,
+                        '',
+                        `Pension Fund: €${parseFloat(getVal('pensionFund')).toLocaleString()}`,
+                        `Pension Fund Yearly Contribution: €${parseFloat(getVal('pensionContribution')).toLocaleString()}`,
+                        `Pension Fund Expected Return: ${getVal('pensionReturn')}%`,
+                        `Include Pension Fund in Plots: ${getChecked('pensionInclude')}`
+                    ];
+                    paramLines.forEach(line => {
+                        doc.text(line, 40, y);
+                        y += 14;
+                    });
+
+                    // Add number of years explicitly
+                    y += 6;
+                    doc.setFontSize(12);
+                    doc.text(`Number of Years: ${timeHorizonYears}`, 40, y);
+                    y += 18;
+
+                    // --- Summary Cards Section ---
+                    doc.setFontSize(14);
+                    doc.text('Summary', 40, y);
+                    y += 16;
+                    doc.setFontSize(12);
+                    const summaryIds = [
+                        { label: 'Final Value (Nominal)', id: 'finalValue' },
+                        { label: 'Final Value (Real)', id: 'finalRealValue' },
+                        { label: 'Total Contributed', id: 'totalContributed' },
+                        { label: 'Total Gain', id: 'totalGain' },
+                        { label: 'Portfolio Gain', id: 'portfolioGain' },
+                        { label: 'Emergency Fund', id: 'emergencyValue', sub: 'emergencyGain' },
+                        { label: 'Pension Fund', id: 'pensionValue', sub: 'pensionGain' }
+                    ];
+                    summaryIds.forEach(item => {
+                        let value = document.getElementById(item.id).textContent;
+                        doc.text(`${item.label}: ${value}`, 40, y);
+                        if (item.sub) {
+                            let subValue = document.getElementById(item.sub).textContent;
+                            doc.setFontSize(10);
+                            doc.text(`   ${subValue}`, 40, y + 14);
+                            doc.setFontSize(12);
+                            y += 28;
+                        } else {
+                            y += 20;
+                        }
+                    });
+
+                    // --- Charts Section ---
+                    y += 10;
+                    doc.setFontSize(14);
+                    doc.text('Portfolio Value Over Time', 40, y);
+                    y += 10;
+                    const portfolioChart = document.getElementById('portfolioChart');
+                    const portfolioImg = portfolioChart.toDataURL('image/png', 1.0);
+                    doc.addImage(portfolioImg, 'PNG', 40, y + 10, 500, 180);
+
+                    y += 200;
+                    doc.setFontSize(14);
+                    doc.text('Asset Breakdown', 40, y);
+                    y += 10;
+                    const assetChart = document.getElementById('assetChart');
+                    const assetImg = assetChart.toDataURL('image/png', 1.0);
+                    doc.addImage(assetImg, 'PNG', 40, y + 10, 500, 180);
+
+                    // --- Plot Data Table Section ---
+                    y += 200;
+                    doc.setFontSize(14);
+                    doc.text('Plot Data Table (Yearly)', 40, y);
+                    y += 12;
+                    doc.setFontSize(9);
+
+                    // Get plot data (yearly only)
+                    const data = this.calculatePortfolio();
+                    // Filter for full years only (month % 12 === 0)
+                    const yearlyData = data.filter(d => d.month % 12 === 0);
+
+                    // Table headers
+                    const headers = [
+                        'Year', 'Nominal Value', 'Real Value',
+                        'Stocks', 'Bonds', 'Gold', 'Emergency Fund', 'Pension Fund', 'Total Contributed'
+                    ];
+                    let x = 40;
+                    headers.forEach((h, i) => {
+                        doc.text(h, x, y);
+                        x += 75;
+                    });
+                    y += 12;
+
+                    // Table rows
+                    yearlyData.forEach(row => {
+                        x = 40;
+                        const values = [
+                            Math.round(row.year),
+                            Math.round(row.totalValue).toLocaleString(),
+                            Math.round(row.realValue).toLocaleString(),
+                            Math.round(row.stocks).toLocaleString(),
+                            Math.round(row.bonds).toLocaleString(),
+                            Math.round(row.gold).toLocaleString(),
+                            Math.round(row.cash).toLocaleString(),
+                            Math.round(row.pension).toLocaleString(),
+                            Math.round(row.totalContributed).toLocaleString()
+                        ];
+                        values.forEach((v, i) => {
+                            doc.text(String(v), x, y);
+                            x += 75;
+                        });
+                        y += 12;
+                        // Add new page if needed
+                        if (y > 780) {
+                            doc.addPage();
+                            y = 40;
+                        }
+                    });
+
+                    doc.save('portfolio_forecast.pdf');
+                });
+            }
+
+            updateDisplayValues() {
+                // Update displayed values for range inputs
+                document.getElementById('timeHorizonValue').textContent = document.getElementById('timeHorizon').value;
+                document.getElementById('inflationValue').textContent = document.getElementById('inflation').value;
+                document.getElementById('stocksAllocationValue').textContent = document.getElementById('stocksAllocation').value;
+                document.getElementById('bondsAllocationValue').textContent = document.getElementById('bondsAllocation').value;
+                document.getElementById('goldAllocationValue').textContent = document.getElementById('goldAllocation').value;
+                document.getElementById('stocksReturnValue').textContent = document.getElementById('stocksReturn').value;
+                document.getElementById('bondsReturnValue').textContent = document.getElementById('bondsReturn').value;
+                document.getElementById('goldReturnValue').textContent = document.getElementById('goldReturn').value;
+                document.getElementById('cashReturnValue').textContent = document.getElementById('cashReturn').value;
+                document.getElementById('pensionReturnValue').textContent = document.getElementById('pensionReturn').value;
+
+                // Update allocation total
+                const total = parseInt(document.getElementById('stocksAllocation').value) +
+                    parseInt(document.getElementById('bondsAllocation').value) +
+                    parseInt(document.getElementById('goldAllocation').value);
+
+                const totalElement = document.getElementById('allocationTotal');
+                totalElement.textContent = `Total: ${total}%`;
+
+                if (total === 100) {
+                    totalElement.className = 'allocation-ok';
+                } else {
+                    totalElement.className = 'allocation-warning';
+                }
+            }
+
+            calculatePortfolio() {
+                const startingSum = parseFloat(document.getElementById('startingSum').value);
+                const emergencyFund = parseFloat(document.getElementById('emergencyFund').value);
+                const monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+                const timeHorizon = parseInt(document.getElementById('timeHorizon').value);
+                const inflation = parseFloat(document.getElementById('inflation').value) / 100;
+                const inflationAdjusted = document.getElementById('inflationAdjusted').checked;
+                const pensionFund = parseFloat(document.getElementById('pensionFund').value);
+                const pensionContributionYearly = parseFloat(document.getElementById('pensionContribution').value);
+                const pensionReturn = parseFloat(document.getElementById('pensionReturn').value) / 100;
+                const pensionInclude = document.getElementById('pensionInclude').checked;
+
+                const allocations = {
+                    stocks: parseFloat(document.getElementById('stocksAllocation').value) / 100,
+                    bonds: parseFloat(document.getElementById('bondsAllocation').value) / 100,
+                    gold: parseFloat(document.getElementById('goldAllocation').value) / 100
+                };
+
+                const returns = {
+                    stocks: parseFloat(document.getElementById('stocksReturn').value) / 100,
+                    bonds: parseFloat(document.getElementById('bondsReturn').value) / 100,
+                    gold: parseFloat(document.getElementById('goldReturn').value) / 100,
+                    cash: parseFloat(document.getElementById('cashReturn').value) / 100
+                };
+
+                const months = timeHorizon * 12;
+                const monthlyInflation = inflation / 12;
+                const data = [];
+
+                // Initialize portfolio
+                let portfolio = {
+                    stocks: startingSum * allocations.stocks,
+                    bonds: startingSum * allocations.bonds,
+                    gold: startingSum * allocations.gold,
+                    cash: emergencyFund
+                };
+                let pension = pensionFund;
+                let totalPensionContributed = pensionFund;
+
+                // Monthly returns
+                const monthlyReturns = {
+                    stocks: Math.pow(1 + returns.stocks, 1 / 12) - 1,
+                    bonds: Math.pow(1 + returns.bonds, 1 / 12) - 1,
+                    gold: Math.pow(1 + returns.gold, 1 / 12) - 1,
+                    cash: Math.pow(1 + returns.cash, 1 / 12) - 1,
+                    pension: Math.pow(1 + pensionReturn, 1 / 12) - 1
+                };
+
+                let totalContributedAmount = startingSum;
+
+                for (let month = 0; month <= months; month++) {
+                    // Add monthly contribution (inflation adjusted if selected)
+                    if (month > 0) {
+                        let contribution = monthlyContribution;
+                        if (inflationAdjusted) {
+                            contribution = monthlyContribution * Math.pow(1 + monthlyInflation, month);
+                        }
+                        totalContributedAmount += contribution;
+                        portfolio.stocks += contribution * allocations.stocks;
+                        portfolio.bonds += contribution * allocations.bonds;
+                        portfolio.gold += contribution * allocations.gold;
+
+                        // Pension fund: add yearly contribution at the start of each year
+                        if (month % 12 === 0) {
+                            pension += pensionContributionYearly;
+                            totalPensionContributed += pensionContributionYearly;
+                        }
+                    }
+
+                    // Apply monthly returns
+                    if (month > 0) {
+                        for (const asset in portfolio) {
+                            portfolio[asset] *= (1 + monthlyReturns[asset]);
+                        }
+                        pension *= (1 + monthlyReturns.pension);
+                    }
+
+                    const totalValue = Object.values(portfolio).reduce((sum, val) => sum + val, 0) + (pensionInclude ? pension : 0);
+                    const realValue = totalValue / Math.pow(1 + monthlyInflation, month);
+
+                    data.push({
+                        month,
+                        year: month / 12,
+                        totalValue,
+                        realValue,
+                        ...portfolio,
+                        pension,
+                        totalContributed: totalContributedAmount + emergencyFund,
+                        totalPensionContributed
+                    });
+                }
+
+                return data;
+            }
+
+            updateCalculations() {
+                const data = this.calculatePortfolio();
+
+                // Update summary cards
+                const finalData = data[data.length - 1];
+                document.getElementById('finalValue').textContent = '€' + Math.round(finalData.totalValue).toLocaleString();
+                document.getElementById('finalRealValue').textContent = '€' + Math.round(finalData.realValue).toLocaleString();
+                document.getElementById('totalContributed').textContent = '€' + Math.round(finalData.totalContributed).toLocaleString();
+
+                const totalGain = finalData.totalValue - finalData.totalContributed;
+                document.getElementById('totalGain').textContent = '€' + Math.round(totalGain).toLocaleString();
+
+                // Update gain card color
+                const gainCard = document.getElementById('totalGainCard');
+                if (totalGain > 0) {
+                    gainCard.className = 'summary-card positive';
+                } else if (totalGain < 0) {
+                    gainCard.className = 'summary-card negative';
+                } else {
+                    gainCard.className = 'summary-card';
+                }
+
+                // --- Emergency fund value and gain in one card ---
+                const startingSum = parseFloat(document.getElementById('startingSum').value);
+                const emergencyFund = parseFloat(document.getElementById('emergencyFund').value);
+
+                // Emergency fund value and gain
+                const emergencyValue = finalData.cash;
+                const emergencyGain = emergencyValue - emergencyFund;
+                document.getElementById('emergencyValue').textContent = '€' + Math.round(emergencyValue).toLocaleString();
+                const emergencyGainElem = document.getElementById('emergencyGain');
+                emergencyGainElem.textContent = (emergencyGain >= 0 ? '+' : '') + '€' + Math.round(emergencyGain).toLocaleString() + ' gain';
+                emergencyGainElem.style.color = emergencyGain > 0 ? '#27ae60' : (emergencyGain < 0 ? '#e74c3c' : '#888');
+                const emergencyCard = document.getElementById('emergencyCard');
+                if (emergencyGain > 0) {
+                    emergencyCard.className = 'summary-card positive';
+                } else if (emergencyGain < 0) {
+                    emergencyCard.className = 'summary-card negative';
+                } else {
+                    emergencyCard.className = 'summary-card';
+                }
+
+                // --- Pension fund value and gain in one card ---
+                const pensionValue = finalData.pension;
+                const pensionGain = pensionValue - finalData.totalPensionContributed;
+                document.getElementById('pensionValue').textContent = '€' + Math.round(pensionValue).toLocaleString();
+                const pensionGainElem = document.getElementById('pensionGain');
+                pensionGainElem.textContent = (pensionGain >= 0 ? '+' : '') + '€' + Math.round(pensionGain).toLocaleString() + ' gain';
+                pensionGainElem.style.color = pensionGain > 0 ? '#27ae60' : (pensionGain < 0 ? '#e74c3c' : '#888');
+                const pensionCard = document.getElementById('pensionCard');
+                if (pensionGain > 0) {
+                    pensionCard.className = 'summary-card positive';
+                } else if (pensionGain < 0) {
+                    pensionCard.className = 'summary-card negative';
+                } else {
+                    pensionCard.className = 'summary-card';
+                }
+
+                // --- New code for splitting gains ---
+                // Portfolio gain (stocks, bonds, gold)
+                // Initial portfolio = startingSum (not including emergency fund)
+                // Contributions: totalContributed - startingSum - emergencyFund
+                // So, total invested in portfolio = startingSum + (all contributions except emergency fund)
+                // But all contributions go to portfolio, emergency fund is only initial
+                const investedInPortfolio = finalData.totalContributed - emergencyFund;
+                const portfolioValue = finalData.stocks + finalData.bonds + finalData.gold;
+                const portfolioGain = portfolioValue - investedInPortfolio;
+                document.getElementById('portfolioGain').textContent = '€' + Math.round(portfolioGain).toLocaleString();
+                const portfolioGainCard = document.getElementById('portfolioGainCard');
+                if (portfolioGain > 0) {
+                    portfolioGainCard.className = 'summary-card positive';
+                } else if (portfolioGain < 0) {
+                    portfolioGainCard.className = 'summary-card negative';
+                } else {
+                    portfolioGainCard.className = 'summary-card';
+                }
+                // --- End new code ---
+
+                // Update charts
+                this.updateCharts(data);
+            }
+
+            updateCharts(data) {
+                const years = data.map(d => d.year.toFixed(1));
+                const pensionInclude = document.getElementById('pensionInclude').checked;
+
+                // Update portfolio chart
+                this.portfolioChart.data.labels = years;
+                this.portfolioChart.data.datasets[0].data = data.map(d => Math.round(d.totalValue));
+                this.portfolioChart.data.datasets[1].data = data.map(d => Math.round(d.realValue));
+                this.portfolioChart.update('none');
+
+                // Update asset chart
+                this.assetChart.data.labels = years;
+                this.assetChart.data.datasets[0].data = data.map(d => Math.round(d.stocks));
+                this.assetChart.data.datasets[1].data = data.map(d => Math.round(d.bonds));
+                this.assetChart.data.datasets[2].data = data.map(d => Math.round(d.gold));
+                this.assetChart.data.datasets[3].data = data.map(d => Math.round(d.cash));
+                // Add/remove pension dataset
+                if (this.assetChart.data.datasets.length === 4 && pensionInclude) {
+                    this.assetChart.data.datasets.push({
+                        label: 'Pension Fund',
+                        data: data.map(d => Math.round(d.pension)),
+                        borderColor: '#8e44ad',
+                        backgroundColor: 'rgba(142, 68, 173, 0.3)',
+                        fill: true
+                    });
+                } else if (this.assetChart.data.datasets.length === 5 && !pensionInclude) {
+                    this.assetChart.data.datasets.pop();
+                } else if (this.assetChart.data.datasets.length === 5 && pensionInclude) {
+                    this.assetChart.data.datasets[4].data = data.map(d => Math.round(d.pension));
+                }
+                this.assetChart.update('none');
+            }
+
+            bindExport() {
+                document.getElementById('exportPdfBtn').addEventListener('click', async () => {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'pt',
+                        format: 'a4'
+                    });
+
+                    // Title
+                    doc.setFontSize(20);
+                    doc.text('Portfolio Forecasting Results', 40, 40);
+
+                    // --- Parameters Section ---
+                    let y = 70;
+                    doc.setFontSize(14);
+                    doc.text('Parameters', 40, y);
+                    doc.setFontSize(11);
+                    y += 16;
+
+                    // Basic Parameters
+                    const getVal = id => document.getElementById(id).value;
+                    const getChecked = id => document.getElementById(id).checked ? 'Yes' : 'No';
+                    const timeHorizonYears = getVal('timeHorizon');
+                    const paramLines = [
+                        `Starting Investment Sum: €${parseFloat(getVal('startingSum')).toLocaleString()}`,
+                        `Emergency Fund: €${parseFloat(getVal('emergencyFund')).toLocaleString()}`,
+                        `Monthly Contribution: €${parseFloat(getVal('monthlyContribution')).toLocaleString()}`,
+                        `Time Horizon: ${timeHorizonYears} years`,
+                        `Expected Inflation: ${getVal('inflation')}%`,
+                        `Inflation Adjust Contributions: ${getChecked('inflationAdjusted')}`,
+                        '',
+                        `Global Stocks Allocation: ${getVal('stocksAllocation')}%`,
+                        `Global Bonds Allocation: ${getVal('bondsAllocation')}%`,
+                        `Gold Allocation: ${getVal('goldAllocation')}%`,
+                        '',
+                        `Global Stocks Return: ${getVal('stocksReturn')}%`,
+                        `Global Bonds Return: ${getVal('bondsReturn')}%`,
+                        `Gold Return: ${getVal('goldReturn')}%`,
+                        `Emergency Fund Return: ${getVal('cashReturn')}%`,
+                        '',
+                        `Pension Fund: €${parseFloat(getVal('pensionFund')).toLocaleString()}`,
+                        `Pension Fund Yearly Contribution: €${parseFloat(getVal('pensionContribution')).toLocaleString()}`,
+                        `Pension Fund Expected Return: ${getVal('pensionReturn')}%`,
+                        `Include Pension Fund in Plots: ${getChecked('pensionInclude')}`
+                    ];
+                    paramLines.forEach(line => {
+                        doc.text(line, 40, y);
+                        y += 14;
+                    });
+
+                    // Add number of years explicitly
+                    y += 6;
+                    doc.setFontSize(12);
+                    doc.text(`Number of Years: ${timeHorizonYears}`, 40, y);
+                    y += 18;
+
+                    // --- Summary Cards Section ---
+                    doc.setFontSize(14);
+                    doc.text('Summary', 40, y);
+                    y += 16;
+                    doc.setFontSize(12);
+                    const summaryIds = [
+                        { label: 'Final Value (Nominal)', id: 'finalValue' },
+                        { label: 'Final Value (Real)', id: 'finalRealValue' },
+                        { label: 'Total Contributed', id: 'totalContributed' },
+                        { label: 'Total Gain', id: 'totalGain' },
+                        { label: 'Portfolio Gain', id: 'portfolioGain' },
+                        { label: 'Emergency Fund', id: 'emergencyValue', sub: 'emergencyGain' },
+                        { label: 'Pension Fund', id: 'pensionValue', sub: 'pensionGain' }
+                    ];
+                    summaryIds.forEach(item => {
+                        let value = document.getElementById(item.id).textContent;
+                        doc.text(`${item.label}: ${value}`, 40, y);
+                        if (item.sub) {
+                            let subValue = document.getElementById(item.sub).textContent;
+                            doc.setFontSize(10);
+                            doc.text(`   ${subValue}`, 40, y + 14);
+                            doc.setFontSize(12);
+                            y += 28;
+                        } else {
+                            y += 20;
+                        }
+                    });
+
+                    // --- Charts Section ---
+                    y += 10;
+                    doc.setFontSize(14);
+                    doc.text('Portfolio Value Over Time', 40, y);
+                    y += 10;
+                    const portfolioChart = document.getElementById('portfolioChart');
+                    const portfolioImg = portfolioChart.toDataURL('image/png', 1.0);
+                    doc.addImage(portfolioImg, 'PNG', 40, y + 10, 500, 180);
+
+                    y += 200;
+                    doc.setFontSize(14);
+                    doc.text('Asset Breakdown', 40, y);
+                    y += 10;
+                    const assetChart = document.getElementById('assetChart');
+                    const assetImg = assetChart.toDataURL('image/png', 1.0);
+                    doc.addImage(assetImg, 'PNG', 40, y + 10, 500, 180);
+
+                    // --- Plot Data Table Section ---
+                    y += 200;
+                    doc.setFontSize(14);
+                    doc.text('Plot Data Table (Yearly)', 40, y);
+                    y += 12;
+                    doc.setFontSize(9);
+
+                    // Get plot data (yearly only)
+                    const data = this.calculatePortfolio();
+                    // Filter for full years only (month % 12 === 0)
+                    const yearlyData = data.filter(d => d.month % 12 === 0);
+
+                    // Table headers
+                    const headers = [
+                        'Year', 'Nominal Value', 'Real Value',
+                        'Stocks', 'Bonds', 'Gold', 'Emergency Fund', 'Pension Fund', 'Total Contributed'
+                    ];
+                    let x = 40;
+                    headers.forEach((h, i) => {
+                        doc.text(h, x, y);
+                        x += 75;
+                    });
+                    y += 12;
+
+                    // Table rows
+                    yearlyData.forEach(row => {
+                        x = 40;
+                        const values = [
+                            Math.round(row.year),
+                            Math.round(row.totalValue).toLocaleString(),
+                            Math.round(row.realValue).toLocaleString(),
+                            Math.round(row.stocks).toLocaleString(),
+                            Math.round(row.bonds).toLocaleString(),
+                            Math.round(row.gold).toLocaleString(),
+                            Math.round(row.cash).toLocaleString(),
+                            Math.round(row.pension).toLocaleString(),
+                            Math.round(row.totalContributed).toLocaleString()
+                        ];
+                        values.forEach((v, i) => {
+                            doc.text(String(v), x, y);
+                            x += 75;
+                        });
+                        y += 12;
+                        // Add new page if needed
+                        if (y > 780) {
+                            doc.addPage();
+                            y = 40;
+                        }
+                    });
+
+                    doc.save('portfolio_forecast.pdf');
+                });
+            }
+
+            updateDisplayValues() {
+                // Update displayed values for range inputs
+                document.getElementById('timeHorizonValue').textContent = document.getElementById('timeHorizon').value;
+                document.getElementById('inflationValue').textContent = document.getElementById('inflation').value;
+                document.getElementById('stocksAllocationValue').textContent = document.getElementById('stocksAllocation').value;
+                document.getElementById('bondsAllocationValue').textContent = document.getElementById('bondsAllocation').value;
+                document.getElementById('goldAllocationValue').textContent = document.getElementById('goldAllocation').value;
+                document.getElementById('stocksReturnValue').textContent = document.getElementById('stocksReturn').value;
+                document.getElementById('bondsReturnValue').textContent = document.getElementById('bondsReturn').value;
+                document.getElementById('goldReturnValue').textContent = document.getElementById('goldReturn').value;
+                document.getElementById('cashReturnValue').textContent = document.getElementById('cashReturn').value;
+                document.getElementById('pensionReturnValue').textContent = document.getElementById('pensionReturn').value;
+
+                // Update allocation total
+                const total = parseInt(document.getElementById('stocksAllocation').value) +
+                    parseInt(document.getElementById('bondsAllocation').value) +
+                    parseInt(document.getElementById('goldAllocation').value);
+
+                const totalElement = document.getElementById('allocationTotal');
+                totalElement.textContent = `Total: ${total}%`;
+
+                if (total === 100) {
+                    totalElement.className = 'allocation-ok';
+                } else {
+                    totalElement.className = 'allocation-warning';
+                }
+            }
+
+            calculatePortfolio() {
+                const startingSum = parseFloat(document.getElementById('startingSum').value);
+                const emergencyFund = parseFloat(document.getElementById('emergencyFund').value);
+                const monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+                const timeHorizon = parseInt(document.getElementById('timeHorizon').value);
+                const inflation = parseFloat(document.getElementById('inflation').value) / 100;
+                const inflationAdjusted = document.getElementById('inflationAdjusted').checked;
+                const pensionFund = parseFloat(document.getElementById('pensionFund').value);
+                const pensionContributionYearly = parseFloat(document.getElementById('pensionContribution').value);
+                const pensionReturn = parseFloat(document.getElementById('pensionReturn').value) / 100;
+                const pensionInclude = document.getElementById('pensionInclude').checked;
+
+                const allocations = {
+                    stocks: parseFloat(document.getElementById('stocksAllocation').value) / 100,
+                    bonds: parseFloat(document.getElementById('bondsAllocation').value) / 100,
+                    gold: parseFloat(document.getElementById('goldAllocation').value) / 100
+                };
+
+                const returns = {
+                    stocks: parseFloat(document.getElementById('stocksReturn').value) / 100,
+                    bonds: parseFloat(document.getElementById('bondsReturn').value) / 100,
+                    gold: parseFloat(document.getElementById('goldReturn').value) / 100,
+                    cash: parseFloat(document.getElementById('cashReturn').value) / 100
+                };
+
+                const months = timeHorizon * 12;
+                const monthlyInflation = inflation / 12;
+                const data = [];
+
+                // Initialize portfolio
+                let portfolio = {
+                    stocks: startingSum * allocations.stocks,
+                    bonds: startingSum * allocations.bonds,
+                    gold: startingSum * allocations.gold,
+                    cash: emergencyFund
+                };
+                let pension = pensionFund;
+                let totalPensionContributed = pensionFund;
+
+                // Monthly returns
+                const monthlyReturns = {
+                    stocks: Math.pow(1 + returns.stocks, 1 / 12) - 1,
+                    bonds: Math.pow(1 + returns.bonds, 1 / 12) - 1,
+                    gold: Math.pow(1 + returns.gold, 1 / 12) - 1,
+                    cash: Math.pow(1 + returns.cash, 1 / 12) - 1,
+                    pension: Math.pow(1 + pensionReturn, 1 / 12) - 1
+                };
+
+                let totalContributedAmount = startingSum;
+
+                for (let month = 0; month <= months; month++) {
+                    // Add monthly contribution (inflation adjusted if selected)
+                    if (month > 0) {
+                        let contribution = monthlyContribution;
+                        if (inflationAdjusted) {
+                            contribution = monthlyContribution * Math.pow(1 + monthlyInflation, month);
+                        }
+                        totalContributedAmount += contribution;
+                        portfolio.stocks += contribution * allocations.stocks;
+                        portfolio.bonds += contribution * allocations.bonds;
+                        portfolio.gold += contribution * allocations.gold;
+
+                        // Pension fund: add yearly contribution at the start of each year
+                        if (month % 12 === 0) {
+                            pension += pensionContributionYearly;
+                            totalPensionContributed += pensionContributionYearly;
+                        }
+                    }
+
+                    // Apply monthly returns
+                    if (month > 0) {
+                        for (const asset in portfolio) {
+                            portfolio[asset] *= (1 + monthlyReturns[asset]);
+                        }
+                        pension *= (1 + monthlyReturns.pension);
+                    }
+
+                    const totalValue = Object.values(portfolio).reduce((sum, val) => sum + val, 0) + (pensionInclude ? pension : 0);
+                    const realValue = totalValue / Math.pow(1 + monthlyInflation, month);
+
+                    data.push({
+                        month,
+                        year: month / 12,
+                        totalValue,
+                        realValue,
+                        ...portfolio,
+                        pension,
+                        totalContributed: totalContributedAmount + emergencyFund,
+                        totalPensionContributed
+                    });
+                }
+
+                return data;
+            }
+
+            updateCalculations() {
+                const data = this.calculatePortfolio();
+
+                // Update summary cards
+                const finalData = data[data.length - 1];
+                document.getElementById('finalValue').textContent = '€' + Math.round(finalData.totalValue).toLocaleString();
+                document.getElementById('finalRealValue').textContent = '€' + Math.round(finalData.realValue).toLocaleString();
+                document.getElementById('totalContributed').textContent = '€' + Math.round(finalData.totalContributed).toLocaleString();
+
+                const totalGain = finalData.totalValue - finalData.totalContributed;
+                document.getElementById('totalGain').textContent = '€' + Math.round(totalGain).toLocaleString();
+
+                // Update gain card color
+                const gainCard = document.getElementById('totalGainCard');
+                if (totalGain > 0) {
+                    gainCard.className = 'summary-card positive';
+                } else if (totalGain < 0) {
+                    gainCard.className = 'summary-card negative';
+                } else {
+                    gainCard.className = 'summary-card';
+                }
+
+                // --- Emergency fund value and gain in one card ---
+                const startingSum = parseFloat(document.getElementById('startingSum').value);
+                const emergencyFund = parseFloat(document.getElementById('emergencyFund').value);
+
+                // Emergency fund value and gain
+                const emergencyValue = finalData.cash;
+                const emergencyGain = emergencyValue - emergencyFund;
+                document.getElementById('emergencyValue').textContent = '€' + Math.round(emergencyValue).toLocaleString();
+                const emergencyGainElem = document.getElementById('emergencyGain');
+                emergencyGainElem.textContent = (emergencyGain >= 0 ? '+' : '') + '€' + Math.round(emergencyGain).toLocaleString() + ' gain';
+                emergencyGainElem.style.color = emergencyGain > 0 ? '#27ae60' : (emergencyGain < 0 ? '#e74c3c' : '#888');
+                const emergencyCard = document.getElementById('emergencyCard');
+                if (emergencyGain > 0) {
+                    emergencyCard.className = 'summary-card positive';
+                } else if (emergencyGain < 0) {
+                    emergencyCard.className = 'summary-card negative';
+                } else {
+                    emergencyCard.className = 'summary-card';
+                }
+
+                // --- Pension fund value and gain in one card ---
+                const pensionValue = finalData.pension;
+                const pensionGain = pensionValue - finalData.totalPensionContributed;
+                document.getElementById('pensionValue').textContent = '€' + Math.round(pensionValue).toLocaleString();
+                const pensionGainElem = document.getElementById('pensionGain');
+                pensionGainElem.textContent = (pensionGain >= 0 ? '+' : '') + '€' + Math.round(pensionGain).toLocaleString() + ' gain';
+                pensionGainElem.style.color = pensionGain > 0 ? '#27ae60' : (pensionGain < 0 ? '#e74c3c' : '#888');
+                const pensionCard = document.getElementById('pensionCard');
+                if (pensionGain > 0) {
+                    pensionCard.className = 'summary-card positive';
+                } else if (pensionGain < 0) {
+                    pensionCard.className = 'summary-card negative';
+                } else {
+                    pensionCard.className = 'summary-card';
+                }
+
+                // --- New code for splitting gains ---
+                // Portfolio gain (stocks, bonds, gold)
+                // Initial portfolio = startingSum (not including emergency fund)
+                // Contributions: totalContributed - startingSum - emergencyFund
+                // So, total invested in portfolio = startingSum + (all contributions except emergency fund)
+                // But all contributions go to portfolio, emergency fund is only initial
+                const investedInPortfolio = finalData.totalContributed - emergencyFund;
+                const portfolioValue = finalData.stocks + finalData.bonds + finalData.gold;
+                const portfolioGain = portfolioValue - investedInPortfolio;
+                document.getElementById('portfolioGain').textContent = '€' + Math.round(portfolioGain).toLocaleString();
+                const portfolioGainCard = document.getElementById('portfolioGainCard');
+                if (portfolioGain > 0) {
+                    portfolioGainCard.className = 'summary-card positive';
+                } else if (portfolioGain < 0) {
+                    portfolioGainCard.className = 'summary-card negative';
+                } else {
+                    portfolioGainCard.className = 'summary-card';
+                }
+                // --- End new code ---
+
+                // Update charts
+                this.updateCharts(data);
+            }
+
+            updateCharts(data) {
+                const years = data.map(d => d.year.toFixed(1));
+                const pensionInclude = document.getElementById('pensionInclude').checked;
+
+                // Update portfolio chart
+                this.portfolioChart.data.labels = years;
+                this.portfolioChart.data.datasets[0].data = data.map(d => Math.round(d.totalValue));
+                this.portfolioChart.data.datasets[1].data = data.map(d => Math.round(d.realValue));
+                this.portfolioChart.update('none');
+
+                // Update asset chart
+                this.assetChart.data.labels = years;
+                this.assetChart.data.datasets[0].data = data.map(d => Math.round(d.stocks));
+                this.assetChart.data.datasets[1].data = data.map(d => Math.round(d.bonds));
+                this.assetChart.data.datasets[2].data = data.map(d => Math.round(d.gold));
+                this.assetChart.data.datasets[3].data = data.map(d => Math.round(d.cash));
+                // Add/remove pension dataset
+                if (this.assetChart.data.datasets.length === 4 && pensionInclude) {
+                    this.assetChart.data.datasets.push({
+                        label: 'Pension Fund',
+                        data: data.map(d => Math.round(d.pension)),
+                        borderColor: '#8e44ad',
+                        backgroundColor: 'rgba(142, 68, 173, 0.3)',
+                        fill: true
+                    });
+                } else if (this.assetChart.data.datasets.length === 5 && !pensionInclude) {
+                    this.assetChart.data.datasets.pop();
+                } else if (this.assetChart.data.datasets.length === 5 && pensionInclude) {
+                    this.assetChart.data.datasets[4].data = data.map(d => Math.round(d.pension));
+                }
+                this.assetChart.update('none');
+            }
+
+            bindExport() {
+                document.getElementById('exportPdfBtn').addEventListener('click', async () => {
+                    const { jsPDF } = window.jspdf;
+                    // First page: portrait, second page: landscape
+                    const doc = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'pt',
+                        format: 'a4'
+                    });
+
+                    // --- PAGE 1: Parameters & Summary (Portrait) ---
+                    let y = 50;
+                    doc.setFontSize(22);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Portfolio Forecasting Results', 40, y);
+
+                    // --- Parameters Section ---
+                    y += 36;
+                    doc.setFontSize(16);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Parameters', 40, y);
+
+                    y += 18;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+
+                    // Helper functions
+                    const getVal = id => document.getElementById(id).value;
+                    const getChecked = id => document.getElementById(id).checked ? 'Yes' : 'No';
+                    const timeHorizonYears = getVal('timeHorizon');
+
+                    // --- Grouped Parameters ---
+                    // Investment
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Investment:', 40, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Starting Investment Sum: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`€${parseFloat(getVal('startingSum')).toLocaleString()}`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Emergency Fund: `, 50, y);
+                    doc.setFont('helvetica', 'bolditalic');
+                    doc.text(`€${parseFloat(getVal('emergencyFund')).toLocaleString()}`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Monthly Contribution: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`€${parseFloat(getVal('monthlyContribution')).toLocaleString()}`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Time Horizon: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${timeHorizonYears} years`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Expected Inflation: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('inflation')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Inflation Adjust Contributions: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getChecked('inflationAdjusted')}`, 220, y);
+
+                    // Asset Allocation
+                    y += 22;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Asset Allocation:', 40, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Global Stocks: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('stocksAllocation')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Global Bonds: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('bondsAllocation')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Gold: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('goldAllocation')}%`, 220, y);
+
+                    // Expected Returns
+                    y += 22;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Expected Returns:', 40, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Global Stocks: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('stocksReturn')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Global Bonds: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('bondsReturn')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Gold: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('goldReturn')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Emergency Fund: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('cashReturn')}%`, 220, y);
+
+                    // Pension Fund
+                    y += 22;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Pension Fund:', 40, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Starting Value: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`€${parseFloat(getVal('pensionFund')).toLocaleString()}`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Yearly Contribution: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`€${parseFloat(getVal('pensionContribution')).toLocaleString()}`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Expected Return: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getVal('pensionReturn')}%`, 220, y);
+                    doc.setFont('helvetica', 'normal');
+                    y += 14;
+                    doc.text(`• Include in Plots: `, 50, y);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`${getChecked('pensionInclude')}`, 220, y);
+
+                    // --- Summary Section ---
+                    y += 28;
+                    doc.setFontSize(16);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Summary', 40, y);
+                    y += 18;
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'normal');
+
+                    const summaryIds = [
+                        { label: 'Final Value (Nominal)', id: 'finalValue' },
+                        { label: 'Final Value (Real)', id: 'finalRealValue' },
+                        { label: 'Total Contributed', id: 'totalContributed' },
+                        { label: 'Total Gain', id: 'totalGain' },
+                        { label: 'Portfolio Gain', id: 'portfolioGain' },
+                        { label: 'Emergency Fund', id: 'emergencyValue', sub: 'emergencyGain' },
+                        { label: 'Pension Fund', id: 'pensionValue', sub: 'pensionGain' }
+                    ];
+                    summaryIds.forEach(item => {
+                        doc.setFont('helvetica', 'bold');
+                        let value = document.getElementById(item.id).textContent;
+                        doc.text(`${item.label}:`, 50, y);
+                        doc.setFont('helvetica', 'normal');
+                        doc.text(`${value}`, 220, y);
+                        if (item.sub) {
+                            let subValue = document.getElementById(item.sub).textContent;
+                            doc.setFontSize(10);
+                            doc.setFont('helvetica', 'italic');
+                            doc.text(`   ${subValue}`, 220, y + 12);
+                            doc.setFontSize(12);
+                            doc.setFont('helvetica', 'normal');
+                            y += 22;
+                        } else {
+                            y += 16;
+                        }
+                    });
+
+                    // --- PAGE 2: Plots & Table (Landscape) ---
+                    doc.addPage('a4', 'landscape');
+                    let y2 = 50;
+                    doc.setFontSize(18);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Portfolio Plots & Data Table', 40, y2);
+
+                    // Portfolio Chart
+                    y2 += 24;
+                    doc.setFontSize(13);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Portfolio Value Over Time', 40, y2);
+                    y2 += 10;
+                    const portfolioChart = document.getElementById('portfolioChart');
+                    const portfolioImg = portfolioChart.toDataURL('image/png', 1.0);
+                    doc.addImage(portfolioImg, 'PNG', 40, y2 + 10, 350, 180); // Increased height to 180
+
+                    // Asset Chart
+                    doc.setFontSize(13);
+                    doc.text('Asset Breakdown', 420, y2);
+                    const assetChart = document.getElementById('assetChart');
+                    const assetImg = assetChart.toDataURL('image/png', 1.0);
+                    doc.addImage(assetImg, 'PNG', 420, y2 + 10, 350, 180); // Increased height to 180
+
+                    y2 += 100; // Add more vertical space before the table
+
+                    // --- Table Section ---
+                    y2 += 150;
+                    doc.setFontSize(13);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Plot Data Table (Yearly)', 40, y2);
+
+                    y2 += 14;
+                    doc.setFontSize(9);
+                    doc.setFont('helvetica', 'normal');
+
+                    // Get plot data (yearly only)
+                    const data = this.calculatePortfolio();
+                    const yearlyData = data.filter(d => d.month % 12 === 0);
+
+                    // Table headers
+                    const headers = [
+                        'Year', 'Nominal Value', 'Real Value',
+                        'Stocks', 'Bonds', 'Gold', 'Emergency Fund', 'Pension Fund', 'Total Contributed'
+                    ];
+                    let x = 40;
+                    headers.forEach((h, i) => {
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(h, x, y2);
+                        x += 80;
+                    });
+                    y2 += 12;
+
+                    // Table rows
+                    yearlyData.forEach(row => {
+                        x = 40;
+                        doc.setFont('helvetica', 'normal');
+                        const values = [
+                            Math.round(row.year),
+                            Math.round(row.totalValue).toLocaleString(),
+                            Math.round(row.realValue).toLocaleString(),
+                            Math.round(row.stocks).toLocaleString(),
+                            Math.round(row.bonds).toLocaleString(),
+                            Math.round(row.gold).toLocaleString(),
+                            Math.round(row.cash).toLocaleString(),
+                            Math.round(row.pension).toLocaleString(),
+                            Math.round(row.totalContributed).toLocaleString()
+                        ];
+                        values.forEach((v, i) => {
+                            doc.text(String(v), x, y2);
+                            x += 80;
+                        });
+                        y2 += 12;
+                        // Add new page if needed
+                        if (y2 > 540) {
+                            doc.addPage('a4', 'landscape');
+                            y2 = 40;
+                        }
+                    });
+
+                    doc.save('portfolio_forecast.pdf');
+                });
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new PortfolioForecaster();
+        });
+    </script>
+</body>
+
+</html>

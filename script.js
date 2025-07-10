@@ -87,26 +87,48 @@ function changeDotActive(n, section) {
 }
 
 
-function initializeProjects(div, projects, dots_div, section, slideIndex = 0){
-  projects.forEach((entry, index) => {
+function initializeProjects(div, projects, dots_div, section, slideIndex = 0) {
+  div.innerHTML = '';
+  dots_div.innerHTML = '';
+  let currentIndex = slideIndex;
+  const entries = projects.map((entry, index) => {
     const projectEntry = createProjectEntry(entry);
-    if (index != slideIndex) {
-      projectEntry.style.display = 'none'; // Initially hide all entries
-    }
+    projectEntry.style.display = (index === currentIndex) ? 'flex' : 'none';
     div.appendChild(projectEntry);
+    return projectEntry;
   });
 
-  for (let i = 0; i < projects.length; i++) {
-    const dot = document.createElement("span");
-    dot.classList.add("dot");
-    if (i == slideIndex) {
-      dot.classList.add("dot-active");
-    }
-    dot.onclick = () => {
-      slideIndex = currentSlide(i, section, slideIndex);
-      changeDotActive(i, section);
-    };
+  function showSlide(n) {
+    entries.forEach((entry, idx) => {
+      entry.style.display = (idx === n) ? 'flex' : 'none';
+    });
+    Array.from(dots_div.children).forEach((dot, idx) => {
+      dot.classList.toggle('dot-active', idx === n);
+    });
+    currentIndex = n;
+  }
+
+  projects.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (i === currentIndex) dot.classList.add('dot-active');
+    dot.onclick = () => showSlide(i);
     dots_div.appendChild(dot);
+  });
+
+  // Add left/right arrows for navigation
+  if (projects.length > 1) {
+    const leftArrow = document.createElement('button');
+    leftArrow.innerHTML = '&#8592;';
+    leftArrow.classList.add('carousel-arrow');
+    leftArrow.onclick = () => showSlide((currentIndex - 1 + projects.length) % projects.length);
+    div.parentNode.insertBefore(leftArrow, div);
+
+    const rightArrow = document.createElement('button');
+    rightArrow.innerHTML = '&#8594;';
+    rightArrow.classList.add('carousel-arrow');
+    rightArrow.onclick = () => showSlide((currentIndex + 1) % projects.length);
+    div.parentNode.insertBefore(rightArrow, div.nextSibling);
   }
 }
 

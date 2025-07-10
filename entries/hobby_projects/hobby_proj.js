@@ -22,6 +22,13 @@ const hobby_projects = [
     imagePath: "./entries/hobby_projects/images/bcn.png",
     link: "whereami/index.html",
   },
+  {
+    name: "Portfolio Visualizer",
+    description: "A web application that allows users to visualize their investment portfolio and forecast performance.",
+    tags: ["Web Development", "HTML", "CSS", "JavaScript"],
+    imagePath: "./entries/hobby_projects/images/bcn.png",
+    link: "portfolioviz/index.html",
+  }
 ];
 
 export default hobby_projects;

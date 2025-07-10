@@ -5,33 +5,316 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BCN Soundboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .panels {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel {
+            text-align: center;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .panel:hover {
+            background: #f0f0f0;
+        }
+
+        .panel.selected {
+            background: #e8f4f8;
+        }
+
+        .panel img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .panel.selected img {
+            opacity: 1;
+        }
+
+        .panel p {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: white;
+            display: block;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #999;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .card:hover {
+            border-color: #999;
+            transform: translateY(-1px);
+        }
+
+        .card:active {
+            transform: translateY(0);
+        }
+
+        .card.playing {
+            border-color: #4CAF50;
+            background: #f8fff8;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .loading, .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .panels {
+                gap: 1rem;
+            }
+
+            .panel {
+                padding: 0.5rem;
+            }
+
+            .panel img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
+        <h1>BCN Soundboard</h1>
+
         <div class="panels">
-            <div class="panel selected" id="zanzara-panel">
-                <img src="icons/la_zanzara.jpg" alt="Zanzara">
-                <p>zanzara</p>
+            <div class="panel selected" data-category="zanzara">
+                <img src="https://via.placeholder.com/60x60/666/fff?text=Z" alt="Zanzara">
+                <p>Zanzara</p>
             </div>
-            <div class="panel selected" id="ccrizzi-panel">
-                <img src="icons/ccrizzi.jpg" alt="CCrizzi">
-                <p>ccrizzi</p>
+            <div class="panel selected" data-category="ccrizzi">
+                <img src="https://via.placeholder.com/60x60/666/fff?text=C" alt="CCrizzi">
+                <p>CCrizzi</p>
             </div>
-            <div class="panel selected" id="extra-panel">
-                <img src="icons/barcelona.jpeg" alt="Extra">
-                <p>extra</p>
+            <div class="panel selected" data-category="extra">
+                <img src="https://via.placeholder.com/60x60/666/fff?text=E" alt="Extra">
+                <p>Extra</p>
             </div>
         </div>
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="Search...">
-        </div>
+
+        <input type="text" class="search-bar" id="search" placeholder="Search sounds...">
+
         <div class="grid" id="audio-grid">
-            <!-- Audio items will be populated here by JavaScript -->
+            <div class="loading">Loading sounds...</div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const audioData = {
+            zanzara: [
+                { name: "Intro Theme", file: "zanzara_intro.mp3" },
+                { name: "Laugh Track", file: "zanzara_laugh.mp3" },
+                { name: "Catchphrase", file: "zanzara_phrase.mp3" },
+                { name: "Outro Music", file: "zanzara_outro.mp3" }
+            ],
+            ccrizzi: [
+                { name: "Welcome", file: "ccrizzi_welcome.mp3" },
+                { name: "Signature Sound", file: "ccrizzi_signature.mp3" },
+                { name: "Reaction", file: "ccrizzi_reaction.mp3" },
+                { name: "Goodbye", file: "ccrizzi_goodbye.mp3" }
+            ],
+            extra: [
+                { name: "Applause", file: "extra_applause.mp3" },
+                { name: "Drum Roll", file: "extra_drum.mp3" },
+                { name: "Air Horn", file: "extra_horn.mp3" },
+                { name: "Bell Ring", file: "extra_bell.mp3" }
+            ]
+        };
+
+        let currentAudio = null;
+        let selectedCategories = new Set(['zanzara', 'ccrizzi', 'extra']);
+
+        function init() {
+            setupPanels();
+            setupSearch();
+            updateGrid();
+        }
+
+        function setupPanels() {
+            document.querySelectorAll('.panel').forEach(panel => {
+                panel.addEventListener('click', () => {
+                    const category = panel.dataset.category;
+                    
+                    if (selectedCategories.has(category)) {
+                        if (selectedCategories.size > 1) {
+                            selectedCategories.delete(category);
+                            panel.classList.remove('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        panel.classList.add('selected');
+                    }
+                    
+                    updateGrid();
+                });
+            });
+        }
+
+        function setupSearch() {
+            document.getElementById('search').addEventListener('input', (e) => {
+                updateGrid(e.target.value.toLowerCase());
+            });
+        }
+
+        function updateGrid(searchQuery = '') {
+            const grid = document.getElementById('audio-grid');
+            let sounds = [];
+
+            selectedCategories.forEach(category => {
+                if (audioData[category]) {
+                    audioData[category].forEach(sound => {
+                        sounds.push({...sound, category});
+                    });
+                }
+            });
+
+            if (searchQuery) {
+                sounds = sounds.filter(sound => 
+                    sound.name.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            grid.innerHTML = '';
+
+            if (sounds.length === 0) {
+                grid.innerHTML = '<div class="no-results">No sounds found</div>';
+                return;
+            }
+
+            sounds.forEach(sound => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-title">${sound.name}</div>
+                    <div class="card-category">${sound.category}</div>
+                `;
+                
+                card.addEventListener('click', () => playSound(sound, card));
+                grid.appendChild(card);
+            });
+        }
+
+        function playSound(sound, card) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('playing'));
+            }
+
+            // Simulate audio playback
+            card.classList.add('playing');
+            
+            setTimeout(() => {
+                card.classList.remove('playing');
+                currentAudio = null;
+            }, 2000);
+
+            // For real audio files, replace simulation with:
+            // currentAudio = new Audio(sound.file);
+            // currentAudio.play();
+            // currentAudio.addEventListener('ended', () => {
+            //     card.classList.remove('playing');
+            //     currentAudio = null;
+            // });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 
 </html>
