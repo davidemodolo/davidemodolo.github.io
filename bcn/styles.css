@@ -97,7 +97,7 @@ button:focus {
     position: relative;
     cursor: pointer;
     transform-style: preserve-3d;
-    transition: transform 0.2s, background 0.5s;
+    transition: transform 0.2s;
     background-size: cover;
     background-repeat: no-repeat;
 }
